@@ -19,7 +19,7 @@ containerImage="/vast/eande106/projects/Lance/THESIS_WORK/variant_annotation/con
 data_dir="/vast/eande106/data/c_briggsae/genomes/QX1410_nanopore/Feb2020"
 
 vcf="/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/processed_data/mutants.hard-filter.biallelic.NoMt.vcf.gz"
-gff="$data_dir/csq/QX1410.update.April2025.noWBGeneID.csq.gff3"
+gff="$data_dir/gff/c_briggsae.QX1410_20250929.csq.gff"
 ref_genome="$data_dir/c_briggsae.QX1410_nanopore.Feb2020.genome.fa"
 
 mkdir -p $output_dir
