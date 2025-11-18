@@ -17,7 +17,7 @@ raw_data="/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/va
 output_dir="/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/processed_data/VEP"
 vcf_dir="/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/processed_data"
 
-gff="/vast/eande106/data/c_briggsae/genomes/QX1410_nanopore/Feb2020/csq/QX1410.update.April2025.noWBGeneID.csq.gff3"
+gff="/vast/eande106/data/c_briggsae/genomes/QX1410_nanopore/Feb2020/gff/c_briggsae.QX1410_20250929.csq.gff"
 ref_genome="c_briggsae.QX1410_nanopore.Feb2020.genome.fa"
 vcf="mutants.hard-filter.biallelic.NoMt.vcf.gz"
 

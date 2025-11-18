@@ -3,25 +3,44 @@
 #SBATCH -J csq_flatfile
 #SBATCH -A eande106
 #SBATCH -p parallel
-#SBATCH -t 48:00:00
+#SBATCH -t 12:00:00
 #SBATCH -N 1
 #SBATCH -c 36
-#SBATCH --output=/vast/eande106/projects/Lance/THESIS_WORK/variant_annotation/processed_data/flat_file_creation/c_briggsae/SLURM_output/0729_VEP.oe  
-#SBATCH --error=/vast/eande106/projects/Lance/THESIS_WORK/variant_annotation/processed_data/flat_file_creation/c_briggsae/SLURM_output/0729_VEP.rr 
+#SBATCH --output=/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/scripts/slurm_output/csq_flatfile.oe  
+#SBATCH --error=/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/scripts/slurm_output/csq_flatfile.rr 
 
 CSQ_annotated_vcf="/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/processed_data/CSQ/mutants.hard-filter.biallelic.NoMt.csq.vcf.gz"
 output_dir="/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/processed_data/CSQ"
 
 if [[ ! -f  "$output_dir/CSQ_flatFile.tsv" ]]; then 
-    
+    # Print header
+    echo -e "Chromosome\tPosition\tREF\tALT\tconsequence\tAA_change\tDNA_change\tALT_samples\ttranscript\tbackground_variant\tpossible_EMS" > $output_dir/CSQ_flatFile.tsv
+
     bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%INFO/BCSQ[\t%SAMPLE=%GT]\n' $CSQ_annotated_vcf | \
-    awk -F'\t' '{
+    awk -F'\t' '{s
         ALT_samples = "";  
         for (i = 6; i <= NF; i++) { 
             if ($i ~ /0\/1|1\/0|1\/1/) { 
                 sub(/=.*/, "", $i);  
                 ALT_samples = ALT_samples (ALT_samples ? " " : "") $i; 
             }
+        }
+        
+        n_ALT = split(ALT_samples, arr, " ")
+
+        # print "ALT_samples length(chars)=" length(ALT_samples) ", count=" n_ALT > "/dev/stderr"
+        
+        ## adding two additional columns if a variant is found in every strain in relation to QX1410 (AF16 genetic background) and if the variant is potentially induced by EMS
+        if (n_ALT == 20) {
+            background = "yes"
+        } else {
+            background = "no"
+        }
+
+        if ($3 == "G" && $4 == "A" || $3 == "C" && $4 == "T") {
+            ems = "yes"
+        } else {
+            ems = "no"
         }
 
         if (ALT_samples != "") {  
@@ -43,10 +62,10 @@ if [[ ! -f  "$output_dir/CSQ_flatFile.tsv" ]]; then
                         transcript = (csq[3] != "" ? csq[3] : "N/A");
                     }
 
-                    print $1"\t"$2"\t"$3"\t"$4"\t"CSQ_consequence"\t"CSQ_AA_change"\t"DNA_change"\t"ALT_samples"\t"transcript;
+                    print $1"\t"$2"\t"$3"\t"$4"\t"CSQ_consequence"\t"CSQ_AA_change"\t"DNA_change"\t"ALT_samples"\t"transcript"\t"background"\t"ems;
                 }
             } else {
-                print $1"\t"$2"\t"$3"\t"$4"\tN/A\tN/A\tN/A\t"ALT_samples"\tN/A";
+                print $1"\t"$2"\t"$3"\t"$4"\tN/A\tN/A\tN/A\t"ALT_samples"\tN/A\t"background"\t"ems;
             }
         }
     }' >> $output_dir/CSQ_flatFile.tsv

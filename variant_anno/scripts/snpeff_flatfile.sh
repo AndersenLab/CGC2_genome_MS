@@ -3,17 +3,19 @@
 #SBATCH -J snpeff_flatfile
 #SBATCH -A eande106
 #SBATCH -p parallel
-#SBATCH -t 48:00:00
+#SBATCH -t 12:00:00
 #SBATCH -N 1
 #SBATCH -c 36
-#SBATCH --output=/vast/eande106/projects/Lance/THESIS_WORK/variant_annotation/processed_data/flat_file_creation/c_briggsae/SLURM_output/0729_VEP.oe  
-#SBATCH --error=/vast/eande106/projects/Lance/THESIS_WORK/variant_annotation/processed_data/flat_file_creation/c_briggsae/SLURM_output/0729_VEP.rr 
+#SBATCH --output=/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/scripts/slurm_output/snpeff_flatfile.oe  
+#SBATCH --error=/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/scripts/slurm_output/snpeff_flatfile.rr 
 
 SnpEff_annotated_vcf="/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/processed_data/SnpEff/mutants.hard-filter.biallelic.onlyMt.snpeff.vcf.gz"
 output_dir="/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_genome_MS/variant_anno/processed_data/SnpEff"
 
 
 if [[ ! -f  "$output_dir/SnpEff_flatFile.tsv" ]]; then 
+
+    echo -e "Chromosome\tPosition\tREF\tALT\tconsequence\timpact\tAA_change\tALT_samples\ttranscript\tbackground_variant\tpossible_EMS" > $output_dir/SnpEff_flatFile.tsv
 
     bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%INFO/ANN[\t%SAMPLE=%GT]\n' $SnpEff_annotated_vcf | \
     awk -F'\t' '{
@@ -23,6 +25,21 @@ if [[ ! -f  "$output_dir/SnpEff_flatFile.tsv" ]]; then
                 sub(/=.*/, "", $i);  # Remove genotype - leaving only sample name
                 ALT_samples = ALT_samples (ALT_samples ? " " : "") $i;  # Append sample name
             }
+        }
+        
+        n_ALT = split(ALT_samples, arr, " ")
+        
+        ## adding two additional columns if a variant is found in every strain in relation to QX1410 (AF16 genetic background) and if the variant is potentially induced by EMS
+        if (n_ALT == 20) {
+            background = "yes"
+        } else {
+            background = "no"
+        }
+
+        if ($3 == "G" && $4 == "A" || $3 == "C" && $4 == "T") {
+            ems = "yes"
+        } else {
+            ems = "no"
         }
 
         if (ALT_samples != "") { 
@@ -39,7 +56,7 @@ if [[ ! -f  "$output_dir/SnpEff_flatFile.tsv" ]]; then
                     transcript = "N/A";
                 }
 
-                print $1"\t"$2"\t"$3"\t"$4"\t"SnpEff_consequence"\t"SnpEff_impact"\t"SnpEff_AA_change"\t"ALT_samples"\t"transcript; 
+                print $1"\t"$2"\t"$3"\t"$4"\t"SnpEff_consequence"\t"SnpEff_impact"\t"SnpEff_AA_change"\t"ALT_samples"\t"transcript"\t"background"\t"ems; 
             }
         }
     }' >> $output_dir/SnpEff_flatFile.tsv
