@@ -223,7 +223,7 @@ echo "Made associative array for ${#CDS_map[@]} CDS entries"
 ### SnpEff 
 # Create header only if the output doesn't already exist
 if [[ ! -f $output_dir/SnpEff_WBGeneID_GRANTHAM_BLOSUM_PP_final.tsv ]]; then
-    echo -e "Chromosome\tPosition\tREF\tALT\tconsequence\timpact\tAA_change\tALT_samples\tbackground_variant\tpossible_EMS\ttranscript\tgeneID\tgene_name\tgrantham_score\tpercent_protein" > $output_dir/SnpEff_WBGeneID_GRANTHAM_BLOSUM_PP_final.tsv
+    echo -e "Chromosome\tPosition\tREF\tALT\tconsequence\timpact\tAA_change\tALT_samples\tbackground_variant\tpossible_EMS\ttranscript\tgeneID\tgene_name\tgrantham_score\tpercent_protein" > $output_dir/SnpEff_WBGeneID_GRANTHAM_PP_final.tsv
 else 
     echo "Final SnpEff file for PP calculation is already created."
 fi
@@ -304,7 +304,7 @@ while IFS=$'\t' read -r chrom pos ref alt consequence impact AA strain backgroun
         fi
     fi
 
-    echo "$chrom\t$pos\t$ref\t$alt\t$consequence\t$impact\t$AA\t$strain\t$background\t$ems\t$transcript_name\t$wbgene\t$locus\t$grantham_score\t$pp" >> $output_dir/SnpEff_WBGeneID_GRANTHAM_PP_final.tsv
+    echo -e "$chrom\t$pos\t$ref\t$alt\t$consequence\t$impact\t$AA\t$strain\t$background\t$ems\t$transcript_name\t$wbgene\t$locus\t$grantham_score\t$pp" >> $output_dir/SnpEff_WBGeneID_GRANTHAM_PP_final.tsv
 
 done < $output_dir/SnpEff_WBGeneID_GRANTHAM_test.tsv
 
