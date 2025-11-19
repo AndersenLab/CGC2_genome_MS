@@ -324,7 +324,7 @@ echo "Made associative array for ${#CDS_map[@]} CDS entries"
 #Create header only if the output doesn't already exist
 if [[ ! -f $output_dir/CSQ_WBGeneID_GRANTHAM_BLOSUM_PP_final.tsv ]]; then
     # echo "chrom,pos,ref,alt,consequence,AA,DNAchange,strain,divergent,transcript_name,wbgene,gene_name,grantham_score,blosum_score,percent_protein" > $output_dir/CSQ_${1}_WBGeneID_GRANTHAM_BLOSUM_PP_final.csv
-        echo -e "Chromosome\tPosition\tREF\tALT\tconsequence\tAA_change\tDNA_change\tALT_samples\tbackground_variant\tpossible_EMS\ttranscript\geneID\tgene_name\tgrantham_score\tblosum_score\tpercent_protein" > $output_dir/CSQ_WBGeneID_GRANTHAM_BLOSUM_PP_final.tsv
+        echo -e "Chromosome\tPosition\tREF\tALT\tconsequence\tAA_change\tDNA_change\tALT_samples\tbackground_variant\tpossible_EMS\ttranscript\tgeneID\tgene_name\tgrantham_score\tblosum_score\tpercent_protein" > $output_dir/CSQ_WBGeneID_GRANTHAM_BLOSUM_PP_final.tsv
 else 
     echo "Final CSQ file for PP calculation is already created."
 fi
