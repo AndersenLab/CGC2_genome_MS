@@ -309,4 +309,4 @@ while IFS=$'\t' read -r chrom pos ref alt consequence impact AA strain backgroun
 done < $output_dir/SnpEff_WBGeneID_GRANTHAM_test.tsv
 
 
-# rm $output_dir/SnpEff_flatFile_WBGeneID.tsv $output_dir/SnpEff_flatFile.tsv $output_dir/c_briggsae.QX1410_20250929.SnpEff.gff_sorted.tsv $output_dir/SnpEff_WBGeneID_GRANTHAM_test.tsv
+rm $output_dir/SnpEff_flatFile_WBGeneID.tsv $output_dir/SnpEff_flatFile.tsv $output_dir/c_briggsae.QX1410_20250929.SnpEff.gff_sorted.tsv $output_dir/SnpEff_WBGeneID_GRANTHAM_test.tsv
