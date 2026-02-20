@@ -78,5 +78,5 @@ final_af_qx <- cowplot::plot_grid(
 final_af_qx
 
 # Saving plot
-ggsave("../../figures/AF16_QX1410_dotplot/AF16_QX1410_dotplot.png", width = 7.5, height = 7.5, dpi = 500)
+ggsave("../../figures/AF16_QX1410_dotplot/AF16_QX1410_dotplot.png", final_af_qx, width = 7.5, height = 7.5, dpi = 500)
 
