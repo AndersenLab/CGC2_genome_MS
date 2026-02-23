@@ -10,7 +10,7 @@
 source activate mummer
 
 # align with nucmer (will spit out a .delta file)
-nucmer --maxgap=500 --prefix=CGC2_QX1410.contigs --coords ../../raw_data/genomes/c_briggsae.QX1410_nanopore.Feb2020.genome.fa ../../raw_data/genomes/CGC2.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.fa
+nucmer --maxgap=500 --prefix=CGC2_QX1410.contigs --coords ../../processed_data/genomes/c_briggsae.QX1410_nanopore.Feb2020.genome.fa ../../processed_data/genomes/CGC2.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.fa
 
 # get coordinate file - filter to contain high-quality alignments that are >1kb
 show-coords -r -l -T CGC2_QX1410.contigs.delta | awk -v OFS='\t' '$5 > 1000' > ../../processed_data/genome_genome_alignments/CGC2_QX1410.transformed.tsv
