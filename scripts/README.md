@@ -11,9 +11,9 @@ scripts/
 - 
 
 ## Abreviations
-EDF = Extended Data Figure\n
-SF = Supplementary Figure\n
-SD = Supplementary Data\n
+EDF = Extended Data Figure
+SF = Supplementary Figure
+SD = Supplementary Data
 
 
 ### Genome assembly

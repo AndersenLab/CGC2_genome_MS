@@ -1,5 +1,5 @@
-# CGC2_genome_MS
+# The updated reference genome for *C. briggsae* AF16: CGC2
 
-### Scripts used to create Figure 1:
-	- /scripts/AF16_QX1410_dotplot/QX1410_AF16_nucmer.sh 
-	- /scripts/AF16_QX1410_dotplot/QX1410_AF16_alignment.ipynb
+## This repository contains the data and scripts used to create the new CGC2 reference genome and associated figures.
+### Navigate to the README.md files in ```scripts/```, ```processed_data/```, and ```data/```.
+
