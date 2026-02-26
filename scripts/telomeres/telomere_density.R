@@ -2,7 +2,7 @@ library(ggplot2)
 library(readr)
 library(dplyr)
 
-telomere_count <- readr::read_tsv("/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_HiC/telomeres/CGC2_telomeres_binned_1kb.bed", col_names = c("chrom","start","end","count"))
+telomere_count <- readr::read_tsv("/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_HiC/telomeres/cgc2_FINAL_telomeres_binned_1kb.bed", col_names = c("chrom","start","end","count"))
 
 chrom_order <- c("I","II","III","IV","V","X")
 
