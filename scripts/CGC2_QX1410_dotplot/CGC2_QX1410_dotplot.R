@@ -7,7 +7,8 @@ chrom_levels <- c("I","II","III","IV","V","X")
 inv_chrom_levels <- c("X","V","IV","III","II","I")
 
 # Loading in nucmer alignment data of AF16 to QX1410
-cg_qx <- readr::read_tsv("/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_HiC/alignment/CGC2_gapfree.transformed.tsv", col_names = c("QXS","QXE","CGS","CGE","L1","L2","IDY","LENR","LENQ","QX_chrom","CGC2_chrom")) %>%
+cg_qx <- readr::read_tsv("../../processed_data/genome_genome_alignments/CGC2_QX1410.transformed.tsv", col_names = c("QXS","QXE","CGS","CGE","L1","L2","IDY","LENR","LENQ","QX_chrom","CGC2_chrom")) %>%
+  dplyr::filter(!grepl(">AC186293.1", CGC2_chrom)) %>% # removing MtDNA
   dplyr::mutate(
     inv = ifelse(CGE < CGS, "yes", "no"),
     # Cap alignments boundaries to the max and min of each chromosome to remove spurious inter-chromosomal alignments 
@@ -41,8 +42,3 @@ cg_qx_plt
 
 # Saving plot
 ggsave("../../figures/CGC2_QX1410_dotplot/CGC2_QX1410_dotplot.png", cg_qx_plt, width = 7.5, height = 7.5, dpi = 500)
-
-
-cowplot::plot_grid(
-  final_af_qx, cg_qx_plot
-)
