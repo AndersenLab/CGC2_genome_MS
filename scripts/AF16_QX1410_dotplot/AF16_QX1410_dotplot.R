@@ -77,6 +77,37 @@ final_af_qx <- cowplot::plot_grid(
   rel_heights = c(0.9, 0.1))
 final_af_qx
 
+
+# Loading in heatmap for panels B and C
+load("../../processed_data/AF16_ancestry/HEATMAP1.Rda")
+load("../../processed_data/AF16_ancestry/HEATMAP2.Rda")
+
+hm1 <- HM1 +
+  ggplot2::theme(axis.text.y = element_text(size = 20, color = 'black'))
+hm1
+
+hm2 <- HM2 +
+  ggplot2::theme()
+hm2
+
+HM2
+
+
+
+dotplot <- cowplot::plot_grid(
+  aligned[[1]], aligned[[2]],
+  ncol = 1,
+  rel_heights = c(0.9, 0.1))
+dotplot
+
+heatmaps <- cowplot::plot_grid()
+heatmaps
+
+final_plot <- cowplot::plot_grid()
+final_plot
+
+
+
 # Saving plot
-ggsave("../../figures/AF16_QX1410_dotplot/AF16_QX1410_dotplot.png", final_af_qx, width = 7.5, height = 7.5, dpi = 500)
+ggsave("../../figures/AF16_QX1410_dotplot/AF16_QX1410_dotplot.png", final_af_qx, width = 7, height = 10, dpi = 600)
 
