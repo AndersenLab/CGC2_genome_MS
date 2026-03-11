@@ -1,6 +1,8 @@
 library(ggplot2)
 library(dplyr)
 library(readr)
+library(ComplexHeatmap)
+library(ggplotify)
 
 # Chromosome ordering for plot
 chrom_levels <- c("I","II","III","IV","V","X")
@@ -73,41 +75,113 @@ aligned <- cowplot::align_plots(af_qx_plt, af_unplaced_plt, align = "v", axis = 
 # Concatenating plots together
 final_af_qx <- cowplot::plot_grid(
   aligned[[1]], aligned[[2]],
+  labels = c('a'), 
+  # label_size = 12,
   ncol = 1,
   rel_heights = c(0.9, 0.1))
 final_af_qx
 
 
 # Loading in heatmap for panels B and C
-load("../../processed_data/AF16_ancestry/HEATMAP1.Rda")
-load("../../processed_data/AF16_ancestry/HEATMAP2.Rda")
+gtcheck <- readr::read_tsv("../../processed_data/AF16_ancestry/gtcheck.allpairs.SNV.nohead.txt",col_names = c("DCv2","S1","S2","discordance","eval","total_sites","matches")) %>%
+  dplyr::mutate(concordance=matches/total_sites)
 
-hm1 <- HM1 +
-  ggplot2::theme(axis.text.y = element_text(size = 20, color = 'black'))
-hm1
+heatmap_data <- gtcheck %>% dplyr::filter(S1!="QX1410" & S2!="QX1410")
 
-hm2 <- HM2 +
-  ggplot2::theme()
-hm2
+samples <- sort(unique(c(heatmap_data$S1, heatmap_data$S2)))
 
-HM2
+pair_grid <- tidyr::expand_grid(
+  S1 = samples,
+  S2 = samples) %>%
+  dplyr::mutate(concordance = dplyr::case_when(S1 == S2 ~ 1, TRUE ~ NA_real_))
 
+hm_full <- pair_grid %>%
+  dplyr::left_join(heatmap_data %>% dplyr::select(S1, S2, concordance), by = c("S1", "S2"), suffix = c("", ".from_data")) %>%
+  dplyr::left_join(heatmap_data %>% dplyr::select(S1, S2, concordance) %>% dplyr::rename(S1_rev = S2, S2_rev = S1, concordance_rev = concordance), by = c("S1" = "S1_rev", "S2" = "S2_rev")) %>%
+  dplyr::mutate(concordance = dplyr::coalesce(concordance.from_data, concordance_rev, concordance)) %>%
+  dplyr::select(S1, S2, concordance)
 
+mat <- hm_full %>%
+  tidyr::pivot_wider(names_from = S1, values_from = concordance) %>%
+  tibble::column_to_rownames("S2") %>%
+  as.matrix()
 
-dotplot <- cowplot::plot_grid(
-  aligned[[1]], aligned[[2]],
-  ncol = 1,
-  rel_heights = c(0.9, 0.1))
-dotplot
+HM1 <- ComplexHeatmap::Heatmap(
+  mat,
+  name = "Proportion of\nidentical SNV\nalleles",
+  col = viridisLite::viridis(100),
+  cluster_rows = FALSE,
+  cluster_columns = FALSE,
+  rect_gp = grid::gpar(col = NA),
+  column_names_gp = grid::gpar(fontsize = 8),
+  row_names_gp = grid::gpar(fontsize = 8),
+  row_names_side = "left",
+  column_names_rot = 45,
+  column_names_side = "top",
+  heatmap_legend_param = list(
+    title = "Proportion of\nidentical SNV\nalleles",
+    title_gp = gpar(fontface = "plain", fontsize = 8), 
+    labels_gp = gpar(fontface = "plain", fontsize = 8) 
+  ))
+HM1
 
-heatmaps <- cowplot::plot_grid()
+HM1_grob <- grid::grid.grabExpr(
+  ComplexHeatmap::draw(HM1,padding = grid::unit(c(5, 10, 5, 5), "mm")))
+
+HM1_gg <- ggplotify::as.ggplot(HM1_grob)
+
+target <- "QX1410"
+
+hm2_df <- gtcheck %>%
+  dplyr::filter(S1 == target | S2 == target) %>%
+  dplyr::mutate(sample = ifelse(S1 == target, S2, S1)) %>%
+  dplyr::select(sample, concordance) %>%
+  dplyr::arrange(sample)
+
+mat2 <- matrix(
+  hm2_df$concordance,
+  nrow = 1,
+  dimnames = list(target, hm2_df$sample))
+
+HM2 <- ComplexHeatmap::Heatmap(
+  t(mat2),
+  name = "Proportion of\nidentical SNV\nalleles",
+  col = viridisLite::viridis(100),
+  cluster_rows = FALSE,
+  cluster_columns = FALSE,
+  column_names_gp = grid::gpar(fontsize = 8),
+  row_names_gp = grid::gpar(fontsize = 8),
+  rect_gp = grid::gpar(col = NA),
+  column_names_side = "top",
+  column_names_rot = 45,
+  row_names_side = "left",
+  heatmap_legend_param = list(
+    title = "Proportion of\nidentical SNV\nalleles",
+    title_gp = gpar(fontface = "plain", fontsize = 8), 
+    labels_gp = gpar(fontface = "plain", fontsize = 8) 
+  ))
+
+HM2_grob <- grid::grid.grabExpr(
+  ComplexHeatmap::draw(HM2,padding = grid::unit(c(5, 10, 6, 5), "mm")))
+
+HM2_gg <- ggplotify::as.ggplot(HM2_grob)
+
+heatmaps <- cowplot::plot_grid(HM2_gg,HM1_gg,
+                           nrow=1,
+                           align="h",
+                           axis = "tb",
+                           rel_widths = c(1,2.2),
+                           labels = c("b","c"))
 heatmaps
 
-final_plot <- cowplot::plot_grid()
+final_plot <- cowplot::plot_grid(
+  final_af_qx, heatmaps,
+  nrow = 2,
+  rel_heights = c(0.7,0.3))
 final_plot
 
 
 
 # Saving plot
-ggsave("../../figures/AF16_QX1410_dotplot/AF16_QX1410_dotplot.png", final_af_qx, width = 7, height = 10, dpi = 600)
+ggsave("../../figures/AF16_QX1410_dotplot/AF16_QX1410_dotplot.png", final_plot, width = 7, height = 10, dpi = 600, bg = 'white')
 
