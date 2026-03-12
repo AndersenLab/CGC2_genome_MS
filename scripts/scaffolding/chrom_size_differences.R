@@ -45,4 +45,3 @@ chrom_size_differences
 
 # Save plot
 ggsave("../../figures/supplementary/chrom_size_differences.png", chrom_size_differences, width = 7, height = 7, dpi = 600)
-

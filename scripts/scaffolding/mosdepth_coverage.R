@@ -2,31 +2,22 @@ library(ggplot2)
 library(dplyr)
 library(readr)
 
-hifi_cov <- readr::read_tsv("/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_HiC/alignment/mosdepth_cov/hifi_chromV_1kb_cov.regions.mosdepth.bed", col_names = c("chrom", "start", "end", "cov")) %>%
+# Laod in hifi coverage
+hifi_cov <- readr::read_tsv("../../processed_data/scaffolding/hifi_chromV_1kb_cov.regions.mosdepth.bed", col_names = c("chrom", "start", "end", "cov")) %>%
   dplyr::mutate(mid_point = (start + end) / 2)
 
-per_base_hifi <- readr::read_tsv("/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_HiC/alignment/mosdepth_cov/hifi_per_base_cov.bed", col_names = c("chrom", "start", "end", "cov")) %>%
-  dplyr::filter(end <= 335000) %>%
-  dplyr::summarize(rDNA_cov = mean(cov))
-
 mean_cov_hifi <- hifi_cov %>%
-  dplyr::summarize(mean_cov = mean(cov),
-                   mean_cov_first335 = )
+  dplyr::summarize(mean_cov = mean(cov))
 
-ont_cov <- readr::read_tsv("/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_HiC/alignment/mosdepth_cov/ONT_chromV_1kb_cov.regions.mosdepth.bed", col_names = c("chrom", "start", "end", "cov")) %>%
+# Laod in ONT coverage
+ont_cov <- readr::read_tsv("../../processed_data/scaffolding/ONT_chromV_1kb_cov.regions.mosdepth.bed", col_names = c("chrom", "start", "end", "cov")) %>%
   dplyr::mutate(mid_point = (start + end) / 2) %>%
   dplyr::mutate(cov_20 = cov / 20)
-
-per_base_ONT <- readr::read_tsv("/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_HiC/alignment/mosdepth_cov/ONT_per_base_cov.bed", col_names = c("chrom", "start", "end", "cov")) %>%
-  dplyr::filter(end <= 335000) %>%
-  dplyr::summarize(rDNA_cov = mean(cov))
-
 
 mean_cov_ont <- ont_cov %>%
   dplyr::summarize(mean_cov = mean(cov))
 
-
-
+# Plot
 rdna_cov <- ggplot() + 
   geom_line(data = ont_cov, aes(x = mid_point / 1000, y = cov_20, color = "ONT coverage / 20")) +
   geom_point(data = ont_cov, aes(x = mid_point / 1000, y = cov_20, color = "ONT coverage / 20")) + 
@@ -51,4 +42,5 @@ rdna_cov <- ggplot() +
   scale_y_continuous(expand = expansion(mult = c(0.005, 0.01)))
 rdna_cov
 
-ggsave("/vast/eande106/projects/Lance/THESIS_WORK/manuscript_repos/CGC2_genome_MS/figures/supplementary/rDNA_coverage.png", rdna_cov, width = 7.5, height = 5, dpi = 600)
+# Save the plot
+ggsave("../../figures/supplementary/rDNA_coverage.png", rdna_cov, width = 7, height = 5, dpi = 600)
