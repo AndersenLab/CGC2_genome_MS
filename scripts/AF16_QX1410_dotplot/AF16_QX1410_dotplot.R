@@ -37,7 +37,7 @@ af_qx_plt <- ggplot(af_qx) +
     axis.title.x = element_blank(),
     axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
-    plot.margin = margin(b = 0),
+    plot.margin = margin(b = 0, t = 1, r = 1, l = 1),
     legend.position = "none"
   ) +
   labs(y = "AF16 genome coordinates (Mb)") +
@@ -62,7 +62,7 @@ af_unplaced_plt <- ggplot(af_unplaced) +
     axis.title = element_text(size = 14, color = 'black'),
     axis.text = element_text(size = 10, color = 'black'),
     axis.title.y = element_blank(),
-    plot.margin = margin(t = 0),
+    plot.margin = margin(t = 0, b = 1, l = 1, r = 1),
     panel.border = element_rect(fill = NA)) +
   labs(x = "QX1410 genome coordinates (Mb)") +
   scale_x_continuous(expand = c(0,0), breaks = seq(5,20,5)) +
