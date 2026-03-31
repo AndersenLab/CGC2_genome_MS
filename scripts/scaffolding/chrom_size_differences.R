@@ -20,15 +20,21 @@ both_chrom_sizes <- AF16 %>%
     names_to = "identity",
     values_to = "length")
 
+# Calculating the difference in chromosome size of CGC2 compared to AF16
+size_diff <- AF16 %>%
+  dplyr::left_join(CGC2, by = 'chrom') %>%
+  dplyr::mutate(diff_size_kb = round((CGC2 - AF16) / 1000, 2))
 
+# Plotting 
 chrom_size_differences <- ggplot(both_chrom_sizes, aes(x = chrom, y = length / 1e6, fill = identity)) +
   geom_col(position = position_dodge(width = 0.8), width = 0.7) +
-  scale_y_continuous(expand = c(0,0.2)) +
+  geom_text(data = size_diff, aes(x = chrom, y = pmax(AF16, CGC2) / 1e6 + 0.3, label = paste0(round((CGC2 - AF16) / 1000, 1), " kb"), fill = NULL), size = 4) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.025))) +
   scale_fill_manual(values = c("AF16" = "#E6B3B3", "CGC2" = "#7570B3")) +
   theme(
-    axis.title = element_text(size = 11, color = 'black'),
+    axis.title = element_text(size = 12, color = 'black'),
     axis.title.x = element_blank(),
-    axis.text.x = element_text(size = 11, color = 'black'),
+    axis.text.x = element_text(size = 12, color = 'black'),
     panel.background = element_blank(),
     panel.grid.major= element_line(color = 'gray80'),
     legend.text = element_text(size = 11, color = 'black'),
