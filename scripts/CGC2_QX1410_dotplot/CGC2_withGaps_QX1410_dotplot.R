@@ -19,7 +19,7 @@ CG_telomeres <- readr::read_tsv("../../processed_data/genomes/CGC2_withGaps_telo
 chromV_gaps <- ggplot(alignment_withGaps %>% dplyr::filter(CGC2_chrom == "V" & QX_chrom == "V")) +
   geom_rect(data = gaps %>% dplyr::filter(CGC2_chrom == "V") %>% dplyr::rename(QX_chrom = CGC2_chrom), aes(xmin = -Inf, xmax = Inf, ymin = start/1e6 - 0.001, ymax = end/1e6 + 0.001), fill = '#CC79A7')+
   geom_rect(data = CG_telomeres, aes(xmin = -Inf, xmax = Inf, ymin = start / 1e6, ymax = end / 1e6), fill = '#009E73') +
-  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = CGS / 1e6, yend = CGE / 1e6, color = IDY), linewidth = 1) +
+  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = CGS / 1e6, yend = CGE / 1e6), color = 'black', linewidth = 1) +
   geom_vline(xintercept = 0.068, color = '#E69F00') +
   scale_color_gradient(low = "gold", high = "black") +
   facet_wrap(~QX_chrom, scales = "free") +
@@ -48,7 +48,7 @@ final_tels <- readr::read_tsv("../../processed_data/genomes/CGC2_telomeres_binne
 
 noGaps <- ggplot(gapfree_alignment %>% dplyr::filter(CGC2_chrom == "V" & QX_chrom == "V")) +
   geom_rect(data = final_tels, aes(xmin = -Inf, xmax = Inf, ymin = start / 1e6, ymax = end / 1e6), fill = '#009E73') +
-  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = CGS / 1e6, yend = CGE / 1e6, color = IDY), linewidth = 1) +
+  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = CGS / 1e6, yend = CGE / 1e6), color = 'black', linewidth = 1) +
   geom_hline(yintercept = 0.350 ) +
   geom_vline(xintercept = 0.068, color = '#E69F00') +
   scale_color_gradient(low = "gold", high = "black") +
