@@ -11,7 +11,7 @@ alignment_withGaps <- readr::read_tsv("../../processed_data/genome_genome_alignm
 
 # Gaps on V
 CG_telomeres <- readr::read_tsv("../../processed_data/genomes/CGC2_withGaps_telomeres_binned_1kb.bed", col_names = c("chrom","start","end","count")) %>%
-  dplyr::filter(chrom == "V" & count > 150) %>%
+  dplyr::filter(chrom == "V" & count > 150) %>% # Represents 1 kb segments that are entirely telomeric repeats
   dplyr::filter(start < 150000) %>%
   dplyr::mutate(start = min(start), end = max(end)) %>%
   dplyr::distinct(chrom, start, end)
@@ -76,8 +76,4 @@ final_plot
 
 # Saving final plot:
 ggsave("../../figures/supplementary/chromV_gaps.png", final_plot, width = 7, height = 5, dpi = 600)
-
-
-
-
 
