@@ -41,7 +41,7 @@ tel_count_plt <-
           plot.margin = margin(l = 20, r = 2, t = 2, b = 2),
           axis.title.y = element_blank()
         ) +
-        labs(x = "CGC2 genome position (Mb)") +
+        labs(x = "CGC2 genome coordinates (Mb)") +
         scale_y_continuous(expand = expansion(mult = c(0,0.1))) +
         coord_cartesian(ylim = c(0,180)),
       
@@ -57,7 +57,7 @@ tel_count_plt <-
           plot.margin = margin(l = 20, r = 2, t = 2, b = 2),
           axis.title.y = element_blank()
         ) +
-        labs(x = "AF16 genome position (Mb)") +
+        labs(x = "AF16 genome coordinates (Mb)") +
         scale_y_continuous(expand = expansion(mult = c(0,0.1))) +
         coord_cartesian(ylim = c(0,180)),
       
@@ -73,7 +73,7 @@ tel_count_plt <-
           plot.margin = margin(l = 20, r = 2, t = 2, b = 2),
           axis.title.y = element_blank()
         ) +
-        labs(x = "QX1410 genome position (Mb)") +
+        labs(x = "QX1410 genome coordinates (Mb)") +
         scale_y_continuous(expand = expansion(mult = c(0,0.1))) +
         coord_cartesian(ylim = c(0,180)),
       
@@ -89,7 +89,7 @@ tel_count_plt <-
           axis.title = element_text(size = 11, color = 'black'),
           axis.title.y = element_blank()
         ) +
-        labs(x = "VX34 genome position (Mb)") +
+        labs(x = "VX34 genome coordinates (Mb)") +
         scale_y_continuous(expand = expansion(mult = c(0,0.1))) +
         coord_cartesian(ylim = c(0,180)),
       

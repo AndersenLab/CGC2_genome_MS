@@ -1,0 +1,1 @@
+/vast/eande106/projects/Lance/THESIS_WORK/assemblies/CGC2_HiC/contact_map/alignments_sorted.txt
