@@ -79,6 +79,7 @@ sc_7_aln
 # Create final plot:
 final_plot <- cowplot::plot_grid(
   hic_coverage, sc_7_aln,
+  labels = c("a","b"),
   nrow = 1,
   align = "h",
   axis = "tb"

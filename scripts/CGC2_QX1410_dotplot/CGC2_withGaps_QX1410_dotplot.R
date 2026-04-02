@@ -71,6 +71,7 @@ noGaps
 # Concatenating plots together
 final_plot <- cowplot::plot_grid(
   chromV_gaps, noGaps,
+  labels = c("a","b"),
   nrow = 1)
 final_plot
 
