@@ -96,7 +96,7 @@ final_af_qx <- cowplot::plot_grid(
   af_qx_main, af_qx_unplaced,
   ncol = 1,
   labels = c("a","b"),
-  rel_heights = c(2,1),
+  rel_heights = c(1,0.75),
   align = "v")
 final_af_qx
 

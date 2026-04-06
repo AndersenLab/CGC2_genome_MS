@@ -30,4 +30,4 @@ cg_qx_main <- ggplot(cg_qx) +
     axis.title = element_text(size = 10, color = 'black'))
 
 # Saving plot
-ggsave("../../figures/CGC2_QX1410_dotplot.png", cg_qx_main, width = 7, height = 4.7, dpi = 600)
+ggsave("../../figures/CGC2_QX1410_dotplot.png", cg_qx_main, width = 7, height = 5, dpi = 600)
