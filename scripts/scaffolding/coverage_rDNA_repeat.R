@@ -36,7 +36,7 @@ rdna_cov <- ggplot() +
     legend.title = element_text(size = 14, color = 'black'),
     legend.box.background = element_rect(color = "black")
   ) +
-  labs(x = "CGC2 chromosome V position (kb)", y = "Mean coverage / kb", color = "Seq technology") +
+  labs(x = "CGC2 chromosome V coordinates (kb)", y = "Mean coverage / kb", color = "Seq technology") +
   coord_cartesian(xlim = c(0, 750)) +
   scale_x_continuous(expand = expansion(mult = c(0.005, 0.001)), breaks = seq(0, 1000, 100)) +
   scale_y_continuous(expand = expansion(mult = c(0.005, 0.01)))
