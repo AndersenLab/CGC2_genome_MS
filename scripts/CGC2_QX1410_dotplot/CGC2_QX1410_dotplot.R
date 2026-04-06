@@ -4,40 +4,30 @@ library(dplyr)
                   
 # Chromosome ordering for plot
 chrom_levels <- c("I","II","III","IV","V","X")
-inv_chrom_levels <- c("X","V","IV","III","II","I")
 
 # Loading in nucmer alignment data of AF16 to QX1410
-cg_qx <- readr::read_tsv("../../processed_data/genome_genome_alignments/CGC2_QX1410.transformed.tsv", col_names = c("QXS","QXE","CGS","CGE","L1","L2","IDY","LENR","LENQ","QX_chrom","CGC2_chrom")) %>%
-  dplyr::filter(!grepl("AC186293.1", CGC2_chrom)) %>% # removing MtDNA
-  dplyr::mutate(
-    inv = ifelse(CGE < CGS, "yes", "no"),
-    # Cap alignments boundaries to the max and min of each chromosome to remove spurious inter-chromosomal alignments 
-    QXS_c = pmin(pmax(QXS, 0), LENR),
-    QXE_c = pmin(pmax(QXE, 0), LENR),
-    CGS_c = pmin(pmax(CGS, 0), LENQ),
-    CGE_c = pmin(pmax(CGE, 0), LENQ),
-    QX_chrom = factor(QX_chrom, levels = chrom_levels),
-    CGC2_chrom = factor(CGC2_chrom, levels = inv_chrom_levels))
-
+cg_qx <- readr::read_tsv("../../processed_data/genome_genome_alignments/CGC2_QX1410.transformed.tsv", 
+                         col_names = c("QXS","QXE","CGS","CGE","L1","L2","IDY","LENR","LENQ","QX1410","CGC2")) %>%
+  dplyr::filter(!grepl("AC186293.1", CGC2)) %>% # removing MtDNA alignments
+  dplyr::mutate(class = ifelse(CGS > CGE, "INV", "NOINV")) %>%
+  dplyr::filter(QX1410 == CGC2)
+  
 # Plotting alignment dotplot faceted by each strains chromosomes to visualzie co-linearity
-cg_qx_plt <- ggplot(cg_qx) +
-  geom_blank(data = cg_qx, aes(x = 0, y = 0)) +
-  geom_blank(data = cg_qx, aes(x = LENR/1e6, y = 0)) +
-  geom_segment(aes(x = QXS_c/1e6, xend = QXE_c/1e6, y = CGS_c/1e6, yend = CGE_c/1e6, color = inv), linewidth = 1) +
-  facet_grid(CGC2_chrom ~ QX_chrom, scales = "free", space = "free") +
-  scale_color_manual(values = c(no = "black", yes = "red")) +
+cg_qx_main <- ggplot(cg_qx) + 
+  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = CGS / 1e6, yend = CGE / 1e6, color = class), linewidth = 1, alpha = 0.7) +
+  scale_color_manual(values = c("INV" = "red", "NOINV" = "black")) +
+  facet_wrap(~QX1410, scales = "free", ncol = 3) +
+  scale_x_continuous(breaks = seq(5,20,5), expand = c(0,0)) +
+  scale_y_continuous(breaks = seq(5,20,5), expand = c(0,0)) +
+  labs(x = "QX1410 genome coordinates (Mb)", y = "CGC2 genome coordinates (Mb)") +
   theme(
+    panel.border = element_rect(color = 'black', fill = NA),
+    legend.position = "none",
+    strip.background = element_rect(fill = "white", colour = "white"),
+    strip.text = element_text(size = 12, color = 'black'),
     panel.background = element_blank(),
-    panel.border = element_rect(fill = NA),
-    strip.text = element_text(size = 14, color = "black"),
-    axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(size = 10, color = "black"),
-    legend.position = "none"
-  ) +
-  labs(y = "CGC2 genome coordinates (Mb)", x = "QX1410 genome coordinates (Mb)") +
-  scale_x_continuous(expand = c(0,0), breaks = seq(5,20,5)) +
-  scale_y_continuous(expand = c(0,0), breaks = seq(5,20,5))
-cg_qx_plt
+    axis.text = element_text(size = 10, color = 'black'),
+    axis.title = element_text(size = 10, color = 'black'))
 
 # Saving plot
-ggsave("../../figures/CGC2_QX1410_dotplot/CGC2_QX1410_dotplot.png", cg_qx_plt, width = 7, height = 7, dpi = 600)
+ggsave("../../figures/CGC2_QX1410_dotplot.png", cg_qx_main, width = 7, height = 4.7, dpi = 600)
