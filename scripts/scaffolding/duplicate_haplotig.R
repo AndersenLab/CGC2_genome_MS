@@ -14,12 +14,12 @@ chrom_cont <- readr::read_tsv("../../processed_data/scaffolding/scaffold_contig_
                                       ifelse(scaffold == "scaffold_3","IV",
                                              ifelse(scaffold == "scaffold_4","II",
                                                     ifelse(scaffold == "scaffold_5","I",
-                                                           ifelse(scaffold == "scaffold_6","III","scaffold_7"))))))) %>%
+                                                           ifelse(scaffold == "scaffold_6","III","sc7"))))))) %>%
   dplyr::left_join(cov, by = "contig") %>% # adding Hi-C coverage per contig information to data frame
   dplyr::mutate(contig = factor(contig, levels = c("ptg000009l","ptg000001l","ptg000004l","ptg000007l",
                                                    "ptg000005l", "ptg000003l","ptg000018l", "ptg000023l", "ptg000016l", "ptg000031l",
                                                    "ptg000024l", "ptg000002l", "ptg000011l"))) %>%
-  mutate(chrom = factor(chrom, levels = c("I","II","III","IV","V","X","scaffold_7"))) 
+  mutate(chrom = factor(chrom, levels = c("I","II","III","IV","V","X","sc7"))) 
 
 # Plotting Hi-C coverage per 
 hic_coverage <- ggplot(chrom_cont, aes(x = contig, y = meandepth, fill = chrom)) +
@@ -29,7 +29,7 @@ hic_coverage <- ggplot(chrom_cont, aes(x = contig, y = meandepth, fill = chrom))
     minor_breaks = seq(0, 800, 25),
     expand = c(0, 5)) +
   coord_cartesian(ylim = c(0,750)) +
-  scale_fill_manual(values = c("I" = "seagreen", "II" = "blue", "III" = "red", "IV" = "green", "V" = "orange","X" = "purple", "scaffold_7" = "gray")) +
+  scale_fill_manual(values = c("I" = "seagreen", "II" = "blue", "III" = "red", "IV" = "green", "V" = "orange","X" = "purple", "sc7" = "gray")) +
   theme(
     axis.title = element_text(size = 10, color = 'black'),
     axis.title.x = element_blank(),
