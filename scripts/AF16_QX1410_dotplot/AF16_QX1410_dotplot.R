@@ -28,11 +28,11 @@ aln_unplaced <- aln_filt %>%
 
 # Plotting genome-genome alignments of AF16 nuclear scaffolds to QX1410
 af_qx_main <- ggplot(aln_main) + 
-  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = AFS / 1e6, yend = AFE / 1e6, color = class), linewidth = 1, alpha = 0.7) +
+  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = AFS / 1e6, yend = AFE / 1e6, color = class), linewidth = 0.75, alpha = 0.7) +
   scale_color_manual(values = c("INV" = "red", "NOINV" = "black")) +
   facet_wrap(~QX1410, scales = "free", ncol = 3) +
-  scale_x_continuous(breaks = seq(5,20,5), expand = c(0,0)) +
-  scale_y_continuous(breaks = seq(5,20,5), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(0,20,5)) +
+  scale_y_continuous(breaks = seq(0,20,5)) +
   labs(x = NULL, y = "AF16 genome coordinates (Mb)") +
   theme(
     panel.border = element_rect(color = 'black', fill = NA),
@@ -102,3 +102,4 @@ final_af_qx
 
 # Saving plot
 ggsave("../../figures/AF16_QX1410_dotplot.png", final_af_qx, width = 7, height = 7, dpi = 600)
+

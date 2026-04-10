@@ -14,11 +14,11 @@ cg_qx <- readr::read_tsv("../../processed_data/genome_genome_alignments/CGC2_QX1
   
 # Plotting alignment dotplot faceted by each strains chromosomes to visualzie co-linearity
 cg_qx_main <- ggplot(cg_qx) + 
-  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = CGS / 1e6, yend = CGE / 1e6, color = class), linewidth = 1, alpha = 0.7) +
+  geom_segment(aes(x = QXS / 1e6, xend = QXE / 1e6, y = CGS / 1e6, yend = CGE / 1e6, color = class), linewidth = 0.75, alpha = 0.7) +
   scale_color_manual(values = c("INV" = "red", "NOINV" = "black")) +
   facet_wrap(~QX1410, scales = "free", ncol = 3) +
-  scale_x_continuous(breaks = seq(5,20,5), expand = c(0,0)) +
-  scale_y_continuous(breaks = seq(5,20,5), expand = c(0,0)) +
+  scale_x_continuous(breaks = seq(0,20,5)) +
+  scale_y_continuous(breaks = seq(0,20,5)) +
   labs(x = "QX1410 genome coordinates (Mb)", y = "CGC2 genome coordinates (Mb)") +
   theme(
     panel.border = element_rect(color = 'black', fill = NA),
