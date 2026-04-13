@@ -120,5 +120,5 @@ final_plot
 
 
 # Saving plot
-ggsave("../../figures/supplementary/chrom_V_inversion.png", final_plot, width = 7, height = 3.5, dpi = 600)
+ggsave("../../figures/supplementary/chrom_V_inversion.png", final_plot, width = 7, height = 7, dpi = 600)
 
