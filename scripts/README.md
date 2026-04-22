@@ -15,38 +15,38 @@ scripts/
 - telomeres/ 
 - VX34_QX1410_dotplot
 
-### AF16cb5_QX1410_dotplot
+## AF16cb5_QX1410_dotplot/
 - `AF16cb5_QX1410_dotplot.R`
 - `AF16cb5_QX1410_nucmer.sh`
 
-### AF16_CGC2_dotplot
+## AF16_CGC2_dotplot/
 - `AF16_CGC2_dotplot.R`
 - `AF16_CGC2_nucmer.sh`
 
-### AF16_QX1410_dotplot
+## AF16_QX1410_dotplot/
 - `AF16_QX1410_dotplot.R`
 - `AF16_QX1410_nucmer.sh`
 
-### CGC2_QX1410_dotplot
+## CGC2_QX1410_dotplot/
 - `CGC2_QX1410_dotplot.R`
 - `CGC2_QX1410_nucmer.sh`
 - `CGC2_withGaps_QX1410_dotplot.R`
 
-### derivative_analysis
+## derivative_analysis/
 - `get_geno_mat.sh`
 - `visualize_similarity.R`
 
-### gene_models
+## gene_models/
 - `align_paired_10kb_motif.sh`
 - `fastp_trim.sh`
 - `orthofinder3_core_fasttree.sh`
 - `visualize_SCortho_3gen.R`
 
-### marker_liftover
+## marker_liftover/
 - `marker2fasta.R`
 - `process_blast.R`
 
-### scaffolding
+## scaffolding/
 - `bwa_hic_alignment.sh`
 - `chromOrientation_flipping.sh`
 - `chrom_size_differences.R`
@@ -59,10 +59,10 @@ scripts/
 - `tgs_gapcloser.sh`
 - `yahs.sh`
 
-### telomeres
+## telomeres/
 - `telomere_density.R`
 - `telomeres.sh`
 
-### VX34_QX1410_dotplot
+## VX34_QX1410_dotplot/
 - `VX34_CGC2_AF16_QX1410_chromV_inversion_vis.R`
 - `VX34_QX1410_nucmer.sh`
