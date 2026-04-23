@@ -16,8 +16,10 @@ scripts/
 - VX34_QX1410_dotplot
 
 ## AF16cb5_QX1410_dotplot/
-- `AF16cb5_QX1410_dotplot.R`
-- `AF16cb5_QX1410_nucmer.sh`
+- `AF16cb5_QX1410_dotplot.R`  
+	- 
+- `AF16cb5_QX1410_nucmer.sh`  
+	- 
 
 ## AF16_CGC2_dotplot/
 - `AF16_CGC2_dotplot.R`
