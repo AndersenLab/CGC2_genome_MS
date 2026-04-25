@@ -21,6 +21,20 @@ description
 - `all_derivative.hard.vcf.gz`
 - `genotype_matrix.tsv`
 
+## genome_genome_alignments/
+
+description
+
+### Contains
+- `AF16cb5_QX1410.transformed.tsv`
+- `AF16_CGC2.transformed.tsv`
+- `AF16_QX1410.transformed.tsv`
+- `CGC2_QX1410.transformed.tsv`
+- `CGC2_withGaps_QX1410.transformed.tsv`
+- `QX_QX.transformed.tsv`
+- `scaffold7_CGC2.transformed.tsv`
+- `VX34_QX1410.transformed.tsv`
+
 ## genomes/
 
 description

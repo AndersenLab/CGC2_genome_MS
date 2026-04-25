@@ -33,15 +33,17 @@ af_qx_main <- ggplot(aln_main) +
   facet_wrap(~QX1410, scales = "free", ncol = 3) +
   scale_x_continuous(breaks = seq(0,20,5)) +
   scale_y_continuous(breaks = seq(0,20,5)) +
-  labs(x = NULL, y = "AF16 genome coordinates (Mb)") +
+  labs(y = "AF16 genome coordinates (Mb)", x = "QX1410 genome coordinates (Mb)") +
   theme(
     panel.border = element_rect(color = 'black', fill = NA),
     legend.position = "none",
     strip.background = element_rect(fill = "white", colour = "white"),
     strip.text = element_text(size = 12, color = 'black'),
     panel.background = element_blank(),
+    plot.margin = margin(l = 20, r = 5),
     axis.text = element_text(size = 10, color = 'black'),
-    axis.title.y = element_text(size = 10, color = 'black', vjust = 0))
+    axis.title = element_text(size = 10, color = 'black', vjust = 0))
+
 
 # Reading in QX1410 chromosome sizes
 qx_chrom_sizes <- read.table("../../processed_data/genomes/c_briggsae.QX1410.nanopore.Feb2020.genome.fa.fai", sep = "\t", header = FALSE, stringsAsFactors = FALSE)
@@ -81,7 +83,7 @@ af_qx_unplaced <- ggplot(cb_overlap) +
   geom_col(aes(x = win_mid / 1e6, y = prop_cb), width = win_size / 1e6, fill = 'black') +
   facet_wrap(~QX1410, scales = "free", ncol = 3) +
   scale_x_continuous(breaks = seq(5,20,5), expand = c(0,0), name = "QX1410 genome coordinates (Mb)") +
-  scale_y_continuous(limits = c(0, 1), expand = c(0,0), labels = scales::percent_format(accuracy = 1),name = "Proportion of sequence\nunplaced in AF16") +
+  scale_y_continuous(limits = c(0, 1), expand = c(0,0), labels = scales::percent_format(accuracy = 1), breaks = seq(0,1,0.5), name = "Proportion of sequence\nunplaced in AF16") +
   theme(
     panel.border = element_rect(color = 'black', fill = NA),
     legend.position = "none",
@@ -96,8 +98,7 @@ final_af_qx <- cowplot::plot_grid(
   af_qx_main, af_qx_unplaced,
   ncol = 1,
   labels = c("a","b"),
-  rel_heights = c(1,0.75),
-  align = "v")
+  rel_heights = c(2,1))
 final_af_qx
 
 # Saving plot

@@ -11,6 +11,7 @@ scripts/
 - derivative_analysis/
 - gene_models/
 - marker_liftover/ 
+- QX1410_QX1410_dotplot
 - scaffolding/ 
 - telomeres/ 
 - VX34_QX1410_dotplot
@@ -47,6 +48,10 @@ scripts/
 ## marker_liftover/
 - `marker2fasta.R`
 - `process_blast.R`
+
+## QX1410_QX1410_dotplot/
+- `QX1410_QX1410_nucmer.sh`
+- `QX_QX_dotplot_INV.R`
 
 ## scaffolding/
 - `bwa_hic_alignment.sh`

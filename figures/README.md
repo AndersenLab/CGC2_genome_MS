@@ -36,7 +36,7 @@ Supplmentary figures:
 		- Supplementary Figure 8
 	- `chrom_V_inversion.png`  
 		- Supplementary Figure 9
-	- ``  
+	- `qx_qx_INV_visualization.png`  
 		- Supplementary Figure 10
 	- `telomere_density.png`  
 		- Supplementary Figure 11
