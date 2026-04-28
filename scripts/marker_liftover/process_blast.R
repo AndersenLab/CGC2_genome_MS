@@ -243,10 +243,10 @@ all_unique <- rbind(perfect_matches,near_perf_matches) %>%
 
 all_located <- rbind(all_unique,multi_map_inferred)
 
-write.table(all_located,"../../tables/TableS9_markerLift_positions_perfect_and_inferred.tsv",quote = F,sep = "\t",row.names = F)
+write.table(all_located,"../../tables/supplementary/TableS8_markerLift_positions_perfect_and_inferred.tsv",quote = F,sep = "\t",row.names = F)
 write.table(multi_mapping_summ %>% 
               dplyr::filter(!(primer %in% all_located$primer)) %>%
-              dplyr::select(primer,indel_id,orientation,total_locations_AF16,total_locations_CGC2),"../../tables/TableS9_markerLift_positions_multi_mapping_summ.tsv",quote = F,sep = "\t",row.names = F)
+              dplyr::select(primer,indel_id,orientation,total_locations_AF16,total_locations_CGC2),"../../tables/supplementary/TableS9_markerLift_positions_multi_mapping_summ.tsv",quote = F,sep = "\t",row.names = F)
               
 ggsave(LIFT + theme(strip.background = element_blank()),filename = "../../figures/Figure3_LIFT.png",width = 7,height = 4,dpi = 600,device = 'png')
 
@@ -295,4 +295,4 @@ MMAP <- cowplot::ggdraw(panel) +
   cowplot::draw_label("Primer ID", x = 0.005, y = 0.5, angle = 90, vjust = 0.5) +
   cowplot::draw_label("Number of BLASTn hits", x = 0.5, y = -0.005, vjust = 0.5)
 
-ggsave(MMAP,filename = "../../figures/FigureS14_MMAP.png",width = 7,height = 9,dpi = 600,device = 'png',bg="white")
+ggsave(MMAP,filename = "../../figures/supplementary/FigureS14_MMAP.png",width = 7,height = 9,dpi = 600,device = 'png',bg="white")

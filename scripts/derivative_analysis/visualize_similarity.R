@@ -74,7 +74,7 @@ snvcounts <-  cowplot::plot_grid(h2 +
                                  align = "h",
                                  axis="tb",
                                  labels = c("a","b"))
-ggsave(snvcounts,filename = "../../figures/FigureS1_SNV_ct.png",width = 7.5,height = 5.5,dpi = 600,device = 'png')
-write.table(geno %>% dplyr::select(-QX1410),"../../tables/TableS3_SNV_counts_derivatives.tsv",sep = "\t",quote = F,row.names = F)
+ggsave(snvcounts,filename = "../../figures/supplementary/FigureS1_SNV_ct.png",width = 7.5,height = 5.5,dpi = 600,device = 'png')
+write.table(geno %>% dplyr::select(-QX1410),"../../tables/supplementary/TableS3_SNV_counts_derivatives.tsv",sep = "\t",quote = F,row.names = F)
 
 

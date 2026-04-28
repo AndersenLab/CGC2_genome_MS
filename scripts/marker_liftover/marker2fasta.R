@@ -10,7 +10,7 @@ tsv_clean <- tsv %>%
   dplyr::mutate(forward=toupper(forward),reverse=toupper(reverse))
 
 write.table(tsv_clean,"../../processed_data/marker_liftover/markers/AFHK_indels.clean.tsv",quote = F,sep="\t",row.names = F)
-write.table(tsv_clean,"../../tables/TableS7_AFHK_indels_info.tsv",quote = F,sep="\t",row.names = F)
+write.table(tsv_clean,"../../tables/supplementary/TableS7_AFHK_indels_info.tsv",quote = F,sep="\t",row.names = F)
 
 forward <- tsv_clean %>%
   dplyr::select(marker,forward) %>%

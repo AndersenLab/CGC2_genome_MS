@@ -7,9 +7,9 @@ chrom_order <- c("I", "II", "III", "IV", "V", "X")
 rect_half_height <- 0.08
 offset_spacer = 300000
 
-af_gff<- readr::read_tsv("../processed_data/orthofinder/gff/c_briggsae.PRJNA10731.WS280.protein_coding.longest.gff",col_names = c("seqid","source","type","start","end","score","strand","phase","attributes"))
-qx_gff<- readr::read_tsv("../processed_data/orthofinder/gff/c_briggsae.QX1410_20250929.csq.longest.gff",col_names = c("seqid","source","type","start","end","score","strand","phase","attributes"))
-cgc2_gff<- readr::read_tsv("../processed_data/orthofinder/gff/CGC2.softMasked.braker.longest.gff3",col_names = c("seqid","source","type","start","end","score","strand","phase","attributes"))
+af_gff<- readr::read_tsv("../../processed_data/orthofinder/gff/c_briggsae.PRJNA10731.WS280.protein_coding.longest.gff",col_names = c("seqid","source","type","start","end","score","strand","phase","attributes"))
+qx_gff<- readr::read_tsv("../../processed_data/orthofinder/gff/c_briggsae.QX1410_20250929.csq.longest.gff",col_names = c("seqid","source","type","start","end","score","strand","phase","attributes"))
+cgc2_gff<- readr::read_tsv("../../processed_data/orthofinder/gff/CGC2.softMasked.braker.longest.gff",col_names = c("seqid","source","type","start","end","score","strand","phase","attributes"))
 
 qx_fai <- readr::read_tsv("../../processed_data/genomes/c_briggsae.QX1410.nanopore.Feb2020.genome.fa.fai", col_names = c("chrom", "length", "offset", "line_bases", "line_width"))
 af_fai <- readr::read_tsv("../../processed_data/genomes/c_briggsae.AF16.PRJNA10731.WS276.genome.fa.fai", col_names = c("chrom", "length", "offset", "line_bases", "line_width")) %>%
@@ -134,7 +134,7 @@ colnames(single_anno_renamed) <- colnames(single_anno_renamed) |>
   gsub("^qx_", "QX1410_", x = _) |>
   gsub("^af_", "AF16_", x = _)
 
-write.table(single_anno_renamed,"../../tables/TableS9_single_copy_orthologs_4spp.tsv",sep = "\t",quote = F,row.names = F)
+write.table(single_anno_renamed,"../../tables/TableS11_single_copy_orthologs_3spp.tsv",sep = "\t",quote = F,row.names = F)
 
 single_anno_shifted <- single_anno %>%
   dplyr::left_join(cgc2_offsets, by = "cgc2_chrom") %>%
@@ -595,7 +595,7 @@ pinter <- ggplot2::ggplot() +
     axis.text.x=element_text(color="black")
   ) #warning indicates that we omit double rectangles for CGC2 - intentional, for simplicity
 
-ggsave(pinter,filename = "../../figures/Figure3_TRANSLOC.png",width = 7,height = 3,dpi = 600,device = 'png',bg = "white")
+ggsave(pinter,filename = "../../figures/supplementary/FigureS15_TRANSLOC.png",width = 7,height = 3,dpi = 600,device = 'png',bg = "white")
 
 N2_gff <- readr::read_tsv("../../processed_data/orthofinder/gff/N2.WBonly.WS283.PConly.longest.gff",col_names = c("seqid","source","type","start","end","score","strand","phase","attributes"))
 
@@ -670,7 +670,7 @@ orthos_3way <- orthos_wlen %>% dplyr::filter(!is.na(AF16) & !is.na(CGC2) & !is.n
 write.table(orthos_3way %>%
               dplyr::rename(N2_alias=alias,N2_alias2=alias2) %>%
               dplyr::select(-QX1410,-parent,-QX1410_counts,-QX1410_length,-QX1410_acc,-QX1410_deviation) %>%
-              dplyr::arrange(N2_chrom,N2_start),"../tables/TableS10_sc_ortholog_protein_lengths_wN2.tsv",sep = "\t",quote = F,row.names = F)
+              dplyr::arrange(N2_chrom,N2_start),"../../tables/supplementary/TableS12_sc_ortholog_protein_lengths_wN2.tsv",sep = "\t",quote = F,row.names = F)
 
 plac1 <- ggplot(orthos_3way) + 
   geom_point(aes(x=CGC2_acc-1,y=AF16_acc-1,color=class),size=0.7) + 
@@ -841,7 +841,7 @@ acc_plt <- cowplot::plot_grid(cowplot::plot_grid(NULL,
                               labels = c("a",""))
 #acc_plt
 
-ggsave(acc_plt,filename = "../figures/ACC.png",width = 7,height = 4.9,dpi = 600,device = 'png',bg = "white")
+ggsave(acc_plt,filename = "../../figures/Figure5_ACC.png",width = 7,height = 4.9,dpi = 600,device = 'png',bg = "white")
 
 
 
@@ -906,7 +906,7 @@ counts1 <-ggplot2::ggplot(dev_bar, ggplot2::aes(x = dev_bin, y = n, fill = sampl
   xlab("Absolute percent protein sequence\nlength difference from N2")+
   ylab("Number of genes")
                    
-ggsave(counts1,filename = "../figures/ACC_ct.png",width = 7,height = 5,dpi = 600,device = 'png',bg = "white")                   
+ggsave(counts1,filename = "../../figures/supplementary/FigureS16_ACC_ct.png",width = 7,height = 5,dpi = 600,device = 'png',bg = "white")                   
 
 
 orthos_miss_AF16 <- orthos_wlen %>%
@@ -950,9 +950,6 @@ summary_table <- lapply(strains, function(target) {
   
 }) |>
   dplyr::bind_rows()
-
-summary_table
-
 
 strains <- c("CGC2", "AF16", "QX1410")
 
