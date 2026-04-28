@@ -5,6 +5,7 @@ library(ape)
 library(ggtree)
 library(ggplot2)
 
+#setwd("/vast/eande106/projects/Nicolas/species_trees/CGC2_tree/scripts/")
 geno <- readr::read_tsv("../../processed_data/derivative_analysis/genotype_matrix.tsv") %>% dplyr::filter(QX1410!=2)
 
 geno_simp <- setdiff(names(geno), c("Site", "QX1410"))
@@ -45,14 +46,19 @@ privates_long <- pivot_longer(privates,
                         names_to = "Strain",
                         values_to = "Count")
 
+label_map <- data.frame(Strain=privates_long$Strain,label=c("Andersen, 2013","Gupta, 2006","Gupta, 2017","Baird, 2009","CGC, 1992","CGC, 2023","Chamberlin","Baird, 1991","QX1410"))
+privates_long <- privates_long %>% dplyr::left_join(label_map,by="Strain")
 # classic ggplot invocation
-h3 <- ggplot(data = privates_long %>% dplyr::filter(Strain!="QX1410"), aes(x = Strain, y = Count)) +
+h3 <- ggplot(data = privates_long %>% dplyr::filter(Strain!="QX1410"), aes(x = label, y = Count)) +
   geom_col() +
   geom_text(aes(label = Count), vjust = 0.5,angle=90,hjust=-0.1) +
   labs(title = "",
        x = "",
        y = "Number of private SNV sites") +
   theme_bw() +
+  theme(axis.text = element_text(color="black"),
+        axis.text.x = element_text(angle=45,hjust=1),
+        panel.grid= element_blank())+
   expand_limits(y = max(privates_long$Count) * 1.1)
 
 
@@ -68,7 +74,6 @@ snvcounts <-  cowplot::plot_grid(h2 +
                                  align = "h",
                                  axis="tb",
                                  labels = c("a","b"))
-
 ggsave(snvcounts,filename = "../../figures/FigureS1_SNV_ct.png",width = 7.5,height = 5.5,dpi = 600,device = 'png')
 write.table(geno %>% dplyr::select(-QX1410),"../../tables/TableS3_SNV_counts_derivatives.tsv",sep = "\t",quote = F,row.names = F)
 

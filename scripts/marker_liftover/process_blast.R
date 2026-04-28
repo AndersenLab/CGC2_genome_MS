@@ -51,7 +51,7 @@ cgc2_multi <- cgc2_best %>% dplyr::filter(gsize > 1) %>% dplyr::rename(name=sseq
 
 multi_all <- af_multi %>% dplyr::left_join(cgc2_multi,by="qseqid",relationship = "many-to-many")
 
-primers_mapped <- af_single %>% dplyr::left_join(cgc2_single,by="qseqid") %>%
+primers_mapped <- af_single %>% dplyr::full_join(cgc2_single,by="qseqid") %>%
   tidyr::separate(qseqid, into=c("primerID","direction"),sep = "_",remove = F) %>%
   dplyr::mutate(is_sameChrom=ifelse(name.x==name.y,T,F)) %>%
   dplyr::group_by(primerID) %>%
@@ -109,9 +109,9 @@ primers_unmap <- primers_complete %>%
   dplyr::mutate(primer_set="CGC2 failed to map")
 
 LIFT <- ggplot() + 
-  geom_segment(data=primers_mapped %>% dplyr::filter(is_sameChrom==T & prim_set_num==1) %>% dplyr::rename(name=name.x),aes(x=sstart.x/1e6,xend=sstart.y/1e6,y=ymax.x,yend=ymin.y),color="black",linetype="11") +
+  geom_segment(data=primers_mapped %>% dplyr::filter(is_sameChrom==T & prim_set_num==1) %>% dplyr::rename(name=name.x),aes(x=sstart.x/1e6,xend=sstart.y/1e6,y=ymax.x,yend=ymin.y),color="black",linetype="22") +
   geom_segment(data=primers_complete %>% dplyr::filter(is_sameChrom==T) %>% dplyr::rename(name=name.x),aes(x=newpos.x/1e6,xend=newpos.y/1e6,y=ymax.x,yend=ymin.y),color="black") +
-  geom_segment(data=primers_unmap %>% dplyr::rename(name=name.x),aes(x=sstart.x/1e6,xend=send.x/1e6,y=ymin.x,yend=ymax.x),color= "black")+
+  #geom_segment(data=primers_unmap %>% dplyr::rename(name=name.x),aes(x=sstart.x/1e6,xend=send.x/1e6,y=ymin.x,yend=ymax.x),color= "black")+
   geom_rect(data=af_index %>% dplyr::filter(!grepl("cb",name) & !grepl("MtDNA",name)),aes(xmin = 1/1e6,xmax=length/1e6,ymin=0,ymax=0.5,fill="AF16")) + 
   geom_rect(data=cgc2_index %>% dplyr::filter(!grepl("MtDNA",name)),aes(xmin = 1/1e6,xmax=length/1e6,ymin=3,ymax=3.5,fill="CGC2")) + 
   facet_wrap(~name,nrow=6,ncol=1,scales = 'free_x',strip.position = 'left') +
@@ -135,7 +135,7 @@ unique_unpaired <- primers_mapped %>%
 colnames(unique_unpaired) <- c("primer","AF16_chrom","AF16_match_length","AF16_n_mismatch","AF16_n_gap","AF16_start","AF16_end","AF16_strand","primer_length","CGC2_chrom","CGC2_match_length","CGC2_n_mismatch","CGC2_n_gap","CGC2_start","CGC2_end","CGC2_strand")
 
 tbl2 <- primers_complete %>% 
-  dplyr::filter(is_sameChrom==T & prim_set_num>1) %>%
+  dplyr::filter((is_sameChrom==T & prim_set_num>1)| primerID=="cb-m179") %>%
   dplyr::select(-primerID,-direction,-eval.x,-bitscore.x,-eval.y,-bitscore.y,-qend.y,-ymin.x,-ymax.x,-ymin.y,-ymax.y,-qstart.x,-qend.x,-qstart.y,-qend.y,-pident.x,-pident.y,-gsize.y,-is_sameChrom,-prim_set_num,-primer_set,-gsize.x,-qlen.y,-newpos.x,-newpos.y,-lentest)
 colnames(tbl2) <- c("primer","AF16_chrom","AF16_match_length","AF16_n_mismatch","AF16_n_gap","AF16_start","AF16_end","AF16_strand","primer_length","CGC2_chrom","CGC2_match_length","CGC2_n_mismatch","CGC2_n_gap","CGC2_start","CGC2_end","CGC2_strand")
 
@@ -153,24 +153,33 @@ unique_paired <- tbl2 %>%
   dplyr::group_by(indel_id) %>%
   dplyr::mutate(gsize=n()) %>%
   dplyr::ungroup() %>%
-  dplyr::mutate(AF16_mismatches=AF16_n_mismatch+AF16_n_gap,CGC2_mismatches=CGC2_n_mismatch+CGC2_n_gap) %>%
-  dplyr::select(primer,indel_id,orientation,AF16_chrom,AF16_start,AF16_end,AF16_mismatches,CGC2_chrom,CGC2_start,CGC2_end,CGC2_mismatches)
+  dplyr::mutate(AF16_mismatches=AF16_n_mismatch+AF16_n_gap,CGC2_mismatches=CGC2_n_mismatch+CGC2_n_gap) #%>%
+  #dplyr::select(primer,indel_id,orientation,AF16_chrom,AF16_start,AF16_end,AF16_mismatches,CGC2_chrom,CGC2_start,CGC2_end,CGC2_mismatches)
 
-perfect_matches <- unique_paired %>% dplyr::filter(CGC2_mismatches==AF16_mismatches & AF16_mismatches==0) %>%
+#filtering condition returns empty df
+#incoherent_matches <- unique_paired %>% dplyr::filter(CGC2_mismatches!=AF16_mismatches)
+
+perfect_matches <- unique_paired %>% 
+  dplyr::filter(is.na(AF16_mismatches) | (CGC2_mismatches==AF16_mismatches & CGC2_mismatches==0 )) %>%
   dplyr::group_by(indel_id) %>%
   dplyr::mutate(gsize=n()) %>%
   dplyr::ungroup() %>%
-  dplyr::filter(gsize==2)
+  dplyr::filter(gsize==2) %>% 
+  dplyr::select(-gsize,-AF16_mismatches,-CGC2_mismatches)
 
-single_perf_match <- unique_paired %>% dplyr::filter(CGC2_mismatches==AF16_mismatches & AF16_mismatches==0) %>%
+single_perf_match <- unique_paired %>% 
+  dplyr::filter(is.na(AF16_mismatches) | (CGC2_mismatches==AF16_mismatches & CGC2_mismatches==0 )) %>%
   dplyr::group_by(indel_id) %>%
   dplyr::mutate(gsize=n()) %>%
   dplyr::ungroup() %>%
   dplyr::filter(gsize==1)
 
-single_perf_match_pair <- unique_paired %>% dplyr::filter(CGC2_mismatches==AF16_mismatches & AF16_mismatches==1)
+single_perf_match_pair <- unique_paired %>% dplyr::filter(CGC2_mismatches==AF16_mismatches & CGC2_mismatches>0)
 
-near_perf_matches <- rbind(single_perf_match %>% dplyr::select(-gsize),single_perf_match_pair)
+near_perf_matches <- rbind(single_perf_match %>% 
+                             dplyr::select(-gsize,-AF16_mismatches,-CGC2_mismatches),single_perf_match_pair %>% 
+                             dplyr::select(-gsize,-AF16_mismatches,-CGC2_mismatches)) %>%
+  dplyr::arrange(primer)
 
 multi_mapping_summ <- bind_rows(unique_unpaired%>%
             tidyr::separate(primer,into=c("indel_id","orientation"),sep = "_",remove=F) %>%
@@ -178,14 +187,68 @@ multi_mapping_summ <- bind_rows(unique_unpaired%>%
             dplyr::select(primer,indel_id,orientation,AF16_chrom,AF16_start,AF16_end,AF16_mismatches,CGC2_chrom,CGC2_start,CGC2_end,CGC2_mismatches),
           tbl4 %>%
             dplyr::rename(primer=qseqid,total_locations_AF16=total) %>%
-            dplyr::left_join(tbl3 %>% dplyr::rename(primer=qseqid,total_locations_CGC2=total),by="primer")) %>%
+            dplyr::left_join(tbl3 %>% dplyr::rename(primer=qseqid,total_locations_CGC2=total),by="primer") %>%
+            tidyr::separate(primer,into=c("indel_id","orientation"),sep = "_",remove=F)) %>%
   dplyr::mutate(total_locations_CGC2=ifelse(is.na(total_locations_CGC2),1,total_locations_CGC2),total_locations_AF16=ifelse(is.na(total_locations_AF16),1,total_locations_AF16)) %>%
   dplyr::arrange(primer)
 
-write.table(rbind(perfect_matches,near_perf_matches),"../../tables/TableS8_markerLift_positions.tsv",quote = F,sep = "\t",row.names = F)
-write.table(multi_mapping_summ,"../../tables/TableS9_markerLift_positions_multi_mapping_summ.tsv",quote = F,sep = "\t",row.names = F)
+unpaired_matcher <- bind_rows(unique_unpaired%>%
+                                tidyr::separate(primer,into=c("indel_id","orientation"),sep = "_",remove=F)) %>%
+  dplyr::pull(indel_id)
+
+inferred_pairs <- data.frame()
+for (id in unpaired_matcher) {
+  #print(id)
+  unpaired <- unique_unpaired %>% dplyr::filter(grepl(id,primer))
+  cgc2_pot_hits <- cgc2_multi %>% 
+    dplyr::filter(grepl(id,qseqid)) %>%
+    dplyr::filter(name %in% unpaired$CGC2_chrom) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(pair_dist=min(abs(sstart-unpaired$CGC2_start),
+                                abs(send-unpaired$CGC2_start),
+                                abs(sstart-unpaired$CGC2_end),
+                                abs(send-unpaired$CGC2_end))) %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(pair_dist==min(pair_dist)) %>%
+    dplyr::select(-pident,-qstart,-qend,eval,-bitscore,-qlen,-gsize,-ymin,-ymax,-pair_dist,-eval)
+  colnames(cgc2_pot_hits) <- c("primer","CGC2_chrom","CGC2_match_length","CGC2_n_mismatch","CGC2_n_gap","CGC2_start","CGC2_end","CGC2_strand")
+  
+  af_pot_hits <- af_multi %>% 
+    dplyr::filter(grepl(id,qseqid)) %>%
+    dplyr::filter(name %in% unpaired$AF16_chrom) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(pair_dist=min(abs(sstart-unpaired$AF16_start),
+                                abs(send-unpaired$AF16_start),
+                                abs(sstart-unpaired$AF16_end),
+                                abs(send-unpaired$AF16_end))) %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(pair_dist==min(pair_dist)) %>%
+    dplyr::select(-pident,-qstart,-qend,eval,-bitscore,-gsize,-ymin,-ymax,-pair_dist,-eval)
+  colnames(af_pot_hits) <- c("primer","AF16_chrom","AF16_match_length","AF16_n_mismatch","AF16_n_gap","AF16_start","AF16_end","AF16_strand","primer_length")
+  pot_hits <- af_pot_hits %>% dplyr::left_join(cgc2_pot_hits,by="primer")
+  
+  inferred_pairs <- rbind(inferred_pairs,pot_hits)
+  #print(paste0("Indel: ",id,". Number of hits with distance minima: ",nrow(pot_hits),". Most proximal pair distance: ",pot_hits$pair_dist," bases."))
+}
+multi_map_inferred <- rbind(unique_unpaired,inferred_pairs) %>%
+  dplyr::arrange(primer) %>%
+  dplyr::left_join(multi_mapping_summ %>% dplyr::select(primer,total_locations_AF16,total_locations_CGC2),by="primer") %>%
+  tidyr::separate(primer,into=c("indel_id","orientation"),sep = "_",remove=F) %>%
+  dplyr::select(primer, indel_id, orientation, everything()) 
+
+all_unique <- rbind(perfect_matches,near_perf_matches) %>%
+  dplyr::mutate(total_locations_AF16=1,total_locations_CGC2=1) %>%
+  dplyr::mutate(total_locations_AF16=ifelse(primer=="cb-m179",2,total_locations_AF16)) %>%
+  dplyr::arrange(primer)
+
+all_located <- rbind(all_unique,multi_map_inferred)
+
+write.table(all_located,"../../tables/TableS9_markerLift_positions_perfect_and_inferred.tsv",quote = F,sep = "\t",row.names = F)
+write.table(multi_mapping_summ %>% 
+              dplyr::filter(!(primer %in% all_located$primer)) %>%
+              dplyr::select(primer,indel_id,orientation,total_locations_AF16,total_locations_CGC2),"../../tables/TableS9_markerLift_positions_multi_mapping_summ.tsv",quote = F,sep = "\t",row.names = F)
               
-ggsave(LIFT + theme(strip.background = element_blank()),filename = "../figures/LIFT.png",width = 7,height = 4,dpi = 600,device = 'png')
+ggsave(LIFT + theme(strip.background = element_blank()),filename = "../../figures/Figure3_LIFT.png",width = 7,height = 4,dpi = 600,device = 'png')
 
 multi_af_plot <- ggplot2::ggplot(af_counts, ggplot2::aes(x = x, y = n, fill = name)) +
   ggplot2::geom_col(width = 0.8) +
@@ -232,4 +295,4 @@ MMAP <- cowplot::ggdraw(panel) +
   cowplot::draw_label("Primer ID", x = 0.005, y = 0.5, angle = 90, vjust = 0.5) +
   cowplot::draw_label("Number of BLASTn hits", x = 0.5, y = -0.005, vjust = 0.5)
 
-ggsave(MMAP,filename = "../../figures/supplementary/FigureS13_MMAP.png",width = 7,height = 9,dpi = 600,device = 'png',bg="white")
+ggsave(MMAP,filename = "../../figures/FigureS14_MMAP.png",width = 7,height = 9,dpi = 600,device = 'png',bg="white")
