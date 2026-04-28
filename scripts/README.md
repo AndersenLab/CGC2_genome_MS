@@ -1,29 +1,75 @@
-# This README explains the scripts directory structure and which scripts are used to perform analyses and create figures
+## Scripts 
+This directory contains the scripts that were used to perform analyses and generate figures and tables for the manuscript.
 
 ## Directory Structure
 
 scripts/
-- 
-- 
-- 
-- 
-- 
-- 
+- AF16cb5_QX1410_dotplot/
+- AF16_CGC2_dotplot/
+- AF16_QX1410_dotplot/
+- CGC2_QX1410_dotplot/
+- derivative_analysis/
+- gene_models/
+- marker_liftover/ 
+- QX1410_QX1410_dotplot
+- scaffolding/ 
+- telomeres/ 
+- VX34_QX1410_dotplot
 
-## Abreviations
-EDF = Extended Data Figure
-SF = Supplementary Figure
-SD = Supplementary Data
+## AF16cb5_QX1410_dotplot/
+- `AF16cb5_QX1410_dotplot.R`  
+	- 
+- `AF16cb5_QX1410_nucmer.sh`  
+	- 
 
+## AF16_CGC2_dotplot/
+- `AF16_CGC2_dotplot.R`
+- `AF16_CGC2_nucmer.sh`
 
-### Genome assembly
+## AF16_QX1410_dotplot/
+- `AF16_QX1410_dotplot.R`
+- `AF16_QX1410_nucmer.sh`
 
-### Hi-C scaffolding
+## CGC2_QX1410_dotplot/
+- `CGC2_QX1410_dotplot.R`
+- `CGC2_QX1410_nucmer.sh`
+- `CGC2_withGaps_QX1410_dotplot.R`
 
-### Figure 1
+## derivative_analysis/
+- `get_geno_mat.sh`
+- `visualize_similarity.R`
 
-### Figure 2
+## gene_models/
+- `align_paired_10kb_motif.sh`
+- `fastp_trim.sh`
+- `orthofinder3_core_fasttree.sh`
+- `visualize_SCortho_3gen.R`
 
-### Figure 3
+## marker_liftover/
+- `marker2fasta.R`
+- `process_blast.R`
 
-### Figure 4
+## QX1410_QX1410_dotplot/
+- `QX1410_QX1410_nucmer.sh`
+- `QX_QX_dotplot_INV.R`
+
+## scaffolding/
+- `bwa_hic_alignment.sh`
+- `chromOrientation_flipping.sh`
+- `chrom_size_differences.R`
+- `coverage_rDNA_repeat.R`
+- `duplicate_haplotig.R`
+- `hiC_contactMap.sh`
+- `mosdepth_coverage_rDNA.sh`
+- `ont_hifi_CGC2_aln.sh`
+- `picard.sh`
+- `tgs_gapcloser.sh`
+- `yahs.sh`
+
+## telomeres/
+- `telomere_density.R`
+- `telomeres.sh`
+
+## VX34_QX1410_dotplot/
+- `VX34_CGC2_AF16_QX1410_chromV_inversion_vis.R`
+- `VX34_QX1410_nucmer.sh`
