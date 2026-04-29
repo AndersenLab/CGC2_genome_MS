@@ -16,8 +16,8 @@ Figure 4:
 Figure 5:
 - `Figure5_ACC.png`
 
-Supplmentary figures:
-- `supplementary/'`
+Supplementary figures:
+- `supplementary/`
 	- `FigureS1_SNV_ct.png`  
 		- Supplementary Figure 1
 	- `AF16cb5_QX1410_dotplot.png`  
