@@ -7,7 +7,7 @@ output="../../processed_data/scaffolding"
 hifi="../../data/XEAND_20250610_R84050_PL22490-001_1-1-B01_bc2127-bc2127.hifi_reads.bam"
 
 
-# On scaffolding assembly
+# On scaffolded assembly
 minimap2 -ax map-ont -t 24 $genome $ont | samtools sort -@ 8 -o $output/ONT_CGC2.bam
 samtools index $output/ONT_CGC2.bam
 
