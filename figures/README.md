@@ -8,17 +8,17 @@ Figure 2:
 - `CGC2_QX1410_dotplot.png`
 
 Figure 3:
-- ``
+- `Figure3_LIFT.png`
 
 Figure 4:
-- ``
+- `Figure4_ORTHOS.png`
 
 Figure 5:
-- ``
+- `Figure5_ACC.png`
 
 Supplmentary figures:
 - `supplementary/'`
-	- ``  
+	- `FigureS1_SNV_ct.png`  
 		- Supplementary Figure 1
 	- `AF16cb5_QX1410_dotplot.png`  
 		- Supplementary Figure 2
@@ -44,9 +44,9 @@ Supplmentary figures:
 		- Supplementary Figure 12
 	- `AF16_CGC2_dotplot.png`  
 		- Supplementary Figure 13
-	- ``  
+	- `FigureS14_MMAP.png`  
 		- Supplementary Figure 14
-	- ``  
+	- `FigureS15_TRANSLOC.png`  
 		- Supplementary Figure 15
-	- ``  
+	- `FigureS16_ACC_ct.png`  
 		- Supplementary Figure 16
