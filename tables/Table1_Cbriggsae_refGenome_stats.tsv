@@ -1,0 +1,14 @@
+	AF16 - cb4*	AF16 - cb5	CGC2	QX1410*
+Accession	PRJNA10731	PRJNA917437	PRJNA1451919	PRJNA78495
+Version	WS276	v1	v1	v1
+Size (Mb)	108.4	105.5	106.8	106.2
+Number of Scaffolds	367	6	6 (+MT)	6 (+MT)
+Number of unassigned scaffolds	361	0	0	0
+Percentage of assembly span in six scaffold (%)	97	100	100	100
+Scaffold N50 (Mb)	17.5	17.22	17.39	17.1
+Number of contigs	5,074	30	12	14
+Contig N50 (Mb)	0.05	6.18	17.39	14.7
+Number of gaps	4,707	24	0	7
+Span of Ns (kb)	2,965.50	5.2**	0	3.5
+BUSCO completeness (%)	98.8	99.7	99.7	99.4
+QV score	-	46.45	54.47	45.6
