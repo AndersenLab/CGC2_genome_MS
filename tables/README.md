@@ -1,4 +1,4 @@
-# Figures
+# Tables
 This directory contains all tables.
 
 Table 1:
