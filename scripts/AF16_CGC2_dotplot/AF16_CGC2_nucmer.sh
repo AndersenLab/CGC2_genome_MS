@@ -1,13 +1,4 @@
 #!/bin/bash
-#SBATCH -A eande106
-#SBATCH -p parallel
-#SBATCH -t 48:00:00
-#SBATCH -N 1
-#SBATCH -n 12
-#SBATCH --job-name="mummer"
-
-#activate environment
-source activate mummer
 
 # align with nucmer (will spit out a .delta file)
 nucmer --maxgap=500 --prefix=AF16 --coords ../../processed_data/genomes/c_briggsae.CGC2.hifi.ONT.HiC.Feb2026.genome.fa ../../processed_data/genomes/c_briggsae.AF16.PRJNA10731.WS276.genome.fa

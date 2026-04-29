@@ -1,6 +1,6 @@
 #!/bin/bash
 
-output=../alignment
+output="../../processed_data/scaffolding"
 asm="../../processed_data/genomes/PB420.20251025.inbred.withONT.blobFiltered.fa"
 r1="../../data/pb420_hic_r1.fastq.gz"
 r2="../../data/pb420_hic_r2.fastq.gz"
