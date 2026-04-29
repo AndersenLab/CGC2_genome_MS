@@ -5,7 +5,7 @@ Table 1:
 - `Table1_Cbriggsae_refGenome_stats.tsv`
 	- This TSV contains the genome stats for AF16 cb4, AF16 cb5, CGC2, and QX1410.
 
-Supplmentary figures:
+Supplementary figures:
 - `supplementary/`
 	- `TableS1_AF16_QX1410_genomeAlignment.tsv`
 		- Supplementary Table 1. Genome-genome alignmentsof AF16 cb4 to QX1410. This data is used to create Fig. 1.
