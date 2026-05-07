@@ -70,8 +70,8 @@ This directory contains *C. briggsae* reference genomes, their indices, and quan
 	- The VX34 genome retrieved from NCBI under accession PRJNA784955.
 - `c_briggsae.VX34.nanopore.Feb2020.genome.fa.fai`
 	- FASTA index of the VX34 genome.
-- `CGC2_gapClosing.scaff_seqs` Large file. Available publicly on AWS.
-	- Sequence of CGC2 scaffolds.
+- `CGC2_gapClosing.scaff_seqs` This is a large file not present in this repo.
+	- Sequence of CGC2 scaffolds. This file is produced by `../../scripts/scaffolding/tgs_gapcloser.sh`
 - `CGC2_telomeres_binned_1kb.bed`
 	- Counts of telomeric repeats per kb in the CGC2 genome.
 - `CGC2_withGaps_telomeres_binned_1kb.bed`
@@ -80,12 +80,12 @@ This directory contains *C. briggsae* reference genomes, their indices, and quan
 	- Contiguous assembly of CGC2 before scaffolding.
 - `PB420.20251025.inbred.withONT.blobFiltered.fa.fai`
 	- FASTA index of contiguous CGC2 assembly.
-- `PB420.20260223.inbred.withONT.blobFiltered.yahs_scaffoldeed.bin` Large file. Available publicly on AWS.
-	- Output file from scaffolding with YaHS that is required for generating a Hi-C contact map with Juicer.
+- `PB420.20260223.inbred.withONT.blobFiltered.yahs_scaffolded.bin` This is a large file not present in this repo.
+	- Output file from scaffolding with YaHS that is required for generating a Hi-C contact map with Juicer. This file is produced from `../../scripts/scaffolding/yahs.sh`.
 - `PB420.20260223.inbred.withONT.blobFiltered.yahs_scaffoldeed_scaffolds_final.agp`
 	- Output file from scaffolding with YaHS indicating contig placement into scaffolds and the loci of gaps.
-- `PB420.20260223.inbred.withONT.blobFiltered.yahs_scaffoldeed_scaffolds_final.fa` Large file. Available publicly on AWS.
-	- Scaffolded CGC2 genome assembly output from YaHS.
+- `PB420.20260223.inbred.withONT.blobFiltered.yahs_scaffoldeed_scaffolds_final.fa` This is a large file not present in this repo.
+	- Scaffolded CGC2 genome assembly output from YaHS. This file is produced from `../../scripts/scaffolding/yahs.sh`.
 - `QX1410_telomeres_binned_1kb.bed`
 	- Counts of telomeric repeats per kb in the QX1410 genome.
 - `scaffold_sizes.tsv`
@@ -143,8 +143,8 @@ description
 This directory contains files that are required for scaffolding with YaHS, Hi-C map creation, and manual curation of CGC2.
 
 ### Contains
-- `alignments_sorted.txt` Large file. Available publicly on AWS.
-	- Ouput from Juicer of Hi-C contact pairs required for creating a Hi-C contact map.
+- `alignments_sorted.txt` This is a large file not present in this repo.
+	- Ouput from Juicer of Hi-C contact pairs required for creating a Hi-C contact map. This file is produced from `../../scripts/scaffolding/hiC_contactMap.sh`
 - `CGC2_1kb_windows_chromV.bed`
 	- CGC2 chromosome V broken up into 1 kb bins.
 - `CGC2_gaps.bed`
@@ -155,26 +155,26 @@ This directory contains files that are required for scaffolding with YaHS, Hi-C 
 	- CGC2 chromosome IDs that need to be reoriented to match the orientation of other *C. briggsae* reference genomes.
 - `HiC_contig_coverage.tsv`
 	- Hi-C contact coverage of CGC2 contigs.
-- `HiC_PB420_alignment.markedDUP.bam` Large file. Available publicly on AWS.
-	- Alignment file (BAM) of Hi-C reads to the contiguous CGC2 genome with duplicate Hi-C reads marked.
-- `HiC_PB420_alignment.sorted.bam` Large file. Available publicly on AWS.
-	- Alignment file (BAM) of Hi-C reads to the contiguous CGC2 genome.
-- `hifi_CGC2_noGaps_chroms_reoriented.bam` Large file. Available publicly on AWS.
-	- HiFi read alignments to the final CGC2 genome.
+- `HiC_PB420_alignment.markedDUP.bam` This is a large file not present in this repo.
+	- Alignment file (BAM) of Hi-C reads to the contiguous CGC2 genome with duplicate Hi-C reads marked. This file is created from `../../scripts/scaffolding/picard.sh`
+- `HiC_PB420_alignment.sorted.bam` This is a large file not present in this repo.
+	- Alignment file (BAM) of Hi-C reads to the contiguous CGC2 genome. This file is created from `../../scripts/scaffolding/bwa_hic_alignment.sh`
+- `hifi_CGC2_noGaps_chroms_reoriented.bam` This is a large file not present in this repo.
+	- HiFi read alignments to the final CGC2 genome. This file is created from `../../scripts/ont_hifi_CGC2_aln.sh`
 - `hifi_CGC2_noGaps_chroms_reoriented.bam.bai`
 	- Index file of associated BAM.
 - `hifi_chromV_1kb_cov.regions.mosdepth.bed`
 	- HiFi coverage per kb bin of CGC2 chromosome V. 
-- `hifi_to_CGC2_scaffolds.bam` Large file. Available publicly on AWS.
-	- HiFi read alignments to the scaffolded CGC2 genome with gaps and mis-oriented contigs present.
+- `hifi_to_CGC2_scaffolds.bam` This is a large file not present in this repo.
+	- HiFi read alignments to the scaffolded CGC2 genome with gaps and mis-oriented contigs present. This file is created from `../../scripts/ont_hifi_CGC2_aln.sh`
 - `hifi_to_CGC2_scaffolds.bam.bai`
 	- Index file of associated BAM.
-- `ONT_CGC2_scaffolds.bam` Large file. Available publicly on AWS.
-	- ONT read alignments to the scaffolded CGC2 genome with gaps mis-ordered contigs present.
+- `ONT_CGC2_scaffolds.bam` This is a large file not present in this repo.
+	- ONT read alignments to the scaffolded CGC2 genome with gaps mis-ordered contigs present. This file is created from `../../scripts/ont_hifi_CGC2_aln.sh`
 - `ONT_CGC2_scaffolds.bam.bai`
 	- Index file of associated BAM.
-- `ONT_CGC2_noGap_chroms_reoriented.bam` Large file. Available publicly on AWS.
-	- ONT read alignments to the final CGC2 genome.
+- `ONT_CGC2_noGap_chroms_reoriented.bam` This is a large file not present in this repo.
+	- ONT read alignments to the final CGC2 genome. This file is created from `../../scripts/ont_hifi_CGC2_aln.sh`
 - `ONT_CGC2_noGap_chroms_reoriented.bam.bai`
 	- Index file of associated BAM.
 - `ONT_chromV_1kb_cov.regions.mosdepth.bed`

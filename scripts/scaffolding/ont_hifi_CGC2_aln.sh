@@ -8,14 +8,14 @@ hifi="../../data/XEAND_20250610_R84050_PL22490-001_1-1-B01_bc2127-bc2127.hifi_re
 
 
 # On scaffolded assembly
-minimap2 -ax map-ont -t 24 $genome $ont | samtools sort -@ 8 -o $output/ONT_CGC2.bam
-samtools index $output/ONT_CGC2.bam
+minimap2 -ax map-ont -t 24 $genome $ont | samtools sort -@ 8 -o $output/ONT_CGC2_scaffolds.bam
+samtools index $output/ONT_CGC2_scaffolds.bam
 
 samtools fastq -@ 24 $hifi \
           | minimap2 -t 24 -ax map-hifi $genome - \
-	  | samtools sort -@ 24 -o $output/hifi_to_CGC2.bam
+	  | samtools sort -@ 24 -o $output/hifi_to_CGC2_scaffolds.bam
 
-        samtools index -@ 8 $output/hifi_to_CGC2.bam
+        samtools index -@ 8 $output/hifi_to_CGC2_scaffolds.bam
 
 # On the final assembly after telomric contig re-ordering, gap filling, and chromosome re-orientating 
 minimap2 -ax map-ont -t 24 $genome_final $ont | samtools sort -@ 8 -o $output/ONT_CGC2_noGap_chroms_reoriented.bam
