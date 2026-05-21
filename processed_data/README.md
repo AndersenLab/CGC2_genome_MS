@@ -76,7 +76,8 @@ This directory contains *C. briggsae* reference genomes, their indices, and quan
 	- Counts of telomeric repeats per kb in the CGC2 genome.
 - `CGC2_withGaps_telomeres_binned_1kb.bed`
 	- Counts of telomeric repeats per kb in the CGC2 genome before gap closing and re-ordering of contigs on the left-end of chromosome V.
-- `PB420.20251025.inbred.withONT.blobFiltered.fa` Large file. Available publicly on AWS.
+- `PB420.20251025.inbred.withONT.blobFiltered.fa` Large file. Available
+  publicly on [AWS](https://caendr-open-access-data-bucket/CGC2/manuscript/data/PB420.20251025.inbred.withONT.blobFiltered.fa).
 	- Contiguous assembly of CGC2 before scaffolding.
 - `PB420.20251025.inbred.withONT.blobFiltered.fa.fai`
 	- FASTA index of contiguous CGC2 assembly.
