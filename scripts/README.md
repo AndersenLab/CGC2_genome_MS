@@ -44,17 +44,25 @@ scripts/
 
 ## derivative_analysis/
 - `get_geno_mat.sh`
+	- Script that extracts genotype matrix from VCF
 - `visualize_similarity.R`
+	- Script that visualizes SNV differences between AF16 derivatives. Makes Supplementary Figure 1.
 
 ## gene_models/
 - `align_paired_10kb_motif.sh`
+	- Script to align RNAseq data with STAR.
 - `fastp_trim.sh`
+	- Script to trim RNAseq data.
 - `orthofinder3_core_fasttree.sh`
+	- Script to run orthofinder from protein sequences of CGC2, N2, QX1410, and AF16 cb4.
 - `visualize_SCortho_3gen.R`
+	- Script to visualize mapped and unmapped single copy orthologs between C. briggsae gene annotations.
 
 ## marker_liftover/
 - `marker2fasta.R`
+	- Script to convert marker TSV to primer sequence FASTA. 
 - `process_blast.R`
+	- Script to process BLAST results into mappable marker positions between AF16 cb4 and CGC2
 
 ## QX1410_QX1410_dotplot/
 - `QX1410_QX1410_nucmer.sh`
