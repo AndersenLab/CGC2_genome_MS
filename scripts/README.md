@@ -63,6 +63,8 @@ scripts/
 	- Script to convert marker TSV to primer sequence FASTA. 
 - `process_blast.R`
 	- Script to process BLAST results into mappable marker positions between AF16 cb4 and CGC2
+- `blastn_short.sh`
+	- Script to BLAST short primer sequences against a genome database.
 
 ## QX1410_QX1410_dotplot/
 - `QX1410_QX1410_nucmer.sh`
