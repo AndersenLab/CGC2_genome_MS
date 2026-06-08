@@ -15,11 +15,13 @@ processed_data/
 
 ## derivative_analysis/
 
-description
+This folder contains SNV across between AF16 derivatives
 
 ### Contains
 - `all_derivative.hard.vcf.gz`
+	- variant calls of AF16 derivatives relative to QX1410 genome 
 - `genotype_matrix.tsv`
+	- genotype matrix derived from the variant calls
 
 ## genome_genome_alignments/
 
@@ -96,48 +98,67 @@ This directory contains *C. briggsae* reference genomes, their indices, and quan
 
 ## liftoff/
 
-description
+This directory holds results from LiftOff runs between C. briggsae genomes
 
 ### Contains
 - `AF16toCGC2/c_briggsae.CGC2.hifi.ONT.HiC.Feb2026.liftoff.gff`
+	- AF16 cb4 gene features lifted off to CGC2 genome
 - `AF16toCGC2/unmapped_features.txt`
+	- Unmapped AF16 cb4 gene features
 - `CGC2toAF16/c_briggsae.AF16.liftoff.gff`
+	- CGC2 gene features lifted off to AF16 cb4 genome
 - `CGC2toAF16/unmapped_features.txt`
+	- Unmapped CGC2 features
 
 ## marker_liftover/
 
-description
+This directory holds BLAST inputs and outputs required to map indel marker primers
 
 ### Contains
 - `blastn_results/AF16_marker_hits.tsv.gz`
+	- Indel primer hits to AF16 cb4 genome
 - `blastn_results/CGC2_marker_hits.tsv.gz`
+	- Indel primer hits to CGC2 genome
 - `libraries/AF16/c_briggsae.PRJNA10731.WS280.genomic.fa.*`
+	- blastn libraries for AF16 cb4 genome
 - `libraries/CGC2/c_briggsae.CGC2.hifi.ONT.HiC.Feb2026.genome.fa.*`
+	- blastn libraries for CGC2 genome
 - `liftover_results/markerLift_positions_multi_mapping_summ.tsv`
+	- Multi-mapping primers
 - `liftover_results/markerLift_positions_near_perfect.tsv`
+	- Primers with near perfect matches
 - `liftover_results/markerLift_positions_perfect.tsv`
+	- Primers with perfect matches
 - `markers/AFHK_indels.clean.tsv`
+	- Primers file. Clean headers.
 - `markers/AFHK_indels.tsv`
+	- Source primers file.
 - `markers/AFHK.primers.fasta`
+	- Primer FASTA sequences
 
 ## orthofinder/
 
-description
+This directory holds gene features and protein sequences required to run OrthoFinder
 
 ### Contains
 - `gff/c_briggsae.PRJNA10731.WS280.protein_coding.longest.gff.gz`
+	- AF16 cb4 gene features
 - `gff/c_briggsae.QX1410_20250929.csq.longest.gff.gz`
+	- QX1410 gene features
 - `gff/CGC2.softMasked.braker.longest.gff.gz`
+	- CGC2 gene features
 - `gff/N2.WBonly.WS283.PConly.longest.gff.gz`
-- `orthofinder_results/Orthogroups/Orthogroups.GeneCount.tsv`
-- `orthofinder_results/Orthogroups/Orthogroups_SingleCopyOrthologues.txt`
-- `orthofinder_results/Orthogroups/Orthogroups.tsv`
-- `orthofinder_results/Orthogroups/Orthogroups.txt`
-- `orthofinder_results/Orthogroups/Orthogroups_UnassignedGenes.tsv`
+	- N2 gene features
+- `orthofinder_results/Orthogroups/
+	- Results from OrthoFinder. Includes orthogroups table.
 - `protein/c_briggsae.PRJNA10731.WS280.protein_coding.longest.prot.fa`
+	- AF16 cb4 protein sequences
 - `protein/c_briggsae.QX1410_20250929.csq.longest.protein.fa`
+	- QX1410 protein sequences
 - `protein/CGC2.softMasked.braker.longest.protein.fa`
+	- CGC2 protein sequences
 - `protein/N2.WBonly.WS283.PConly.prot.fa`
+	- N2 protein sequences
 
 ## scaffolding/
 
